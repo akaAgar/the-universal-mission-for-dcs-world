@@ -34,11 +34,11 @@ do
     end
 
     function TUM.missionMenu.create()
-        missionCommands.removeItem() -- Clear the menu
-        missionCommands.addCommand("☱ Mission status", nil, doCommandMissionStatus, nil)
+        local rootMenu = TUM.getOrCreateRootMenu(true) -- Clear the menu
+        missionCommands.addCommand("☱ Mission status", rootMenu, doCommandMissionStatus, nil)
 
-        local objectivesMenuRoot = missionCommands.addSubMenu("❖ Objectives")
-        local navigationMenuRoot = missionCommands.addSubMenu("➽ Navigation")
+        local objectivesMenuRoot = missionCommands.addSubMenu("❖ Objectives", rootMenu)
+        local navigationMenuRoot = missionCommands.addSubMenu("➽ Navigation", rootMenu)
         -- missionCommands.addCommand("Nav to nearest airbase", navigationMenuRoot, doCommandNearestAirbase, nil)
 
         for i=1,TUM.objectives.getCount() do
@@ -57,10 +57,10 @@ do
         TUM.supportAWACS.createMenu()
 
         if not TUM.settings.getValue(TUM.settings.id.MULTIPLAYER) then -- If not multiplayer, add "show mission score" command
-            missionCommands.addCommand("★ Display mission score", nil, TUM.playerScore.showScore, nil)
+            missionCommands.addCommand("★ Display mission score", rootMenu, TUM.playerScore.showScore, nil)
         end
 
-        local abortRoot = missionCommands.addSubMenu("⬣ Abort mission")
+        local abortRoot = missionCommands.addSubMenu("⬣ Abort mission", rootMenu)
         if not TUM.settings.getValue(TUM.settings.id.MULTIPLAYER) and DCSEx.io.canReadAndWrite() then
             missionCommands.addCommand("✓ Confirm (all xp since last landing will be lost!)", abortRoot, doCommandAbortMission, nil)
         else

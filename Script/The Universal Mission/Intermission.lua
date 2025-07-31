@@ -86,7 +86,7 @@ do
     -- Creates the mission briefing menu
     -------------------------------------
     function TUM.intermission.createMenu()
-        missionCommands.removeItem() -- Clear the menu
+        local rootMenu = TUM.getOrCreateRootMenu(true) -- Clear the menu
 
         local briefingText = "Welcome to The Universal Mission for DCS World, a highly customizable mission available for single-player and PvE.\n\nOpen the communication menu and select the ''F10. Other'' option to access mission settings."
         DCSEx.envMission.setBriefing(coalition.side.RED, briefingText)
@@ -94,9 +94,9 @@ do
 
         TUM.intermission.createMissionZonesMarkers() -- Show the available mission zones on the F10 map
 
-        missionCommands.addCommand("ℹ Display mission settings", nil, TUM.settings.printSettingsSummary, false)
+        missionCommands.addCommand("ℹ Display mission settings", rootMenu, TUM.settings.printSettingsSummary, false)
 
-        local settingsMenu = missionCommands.addSubMenu("✎ Change mission settings")
+        local settingsMenu = missionCommands.addSubMenu("✎ Change mission settings", rootMenu)
         createSubMenu(TUM.settings.id.COALITION_BLUE, settingsMenu)
         createSubMenu(TUM.settings.id.COALITION_RED, settingsMenu)
         createSubMenu(TUM.settings.id.TASKING, settingsMenu)
@@ -107,7 +107,7 @@ do
         createSubMenu(TUM.settings.id.WINGMEN, settingsMenu)
         createSubMenu(TUM.settings.id.AI_CAP, settingsMenu)
         TUM.playerCareer.createMenu()
-        missionCommands.addCommand("➤ Begin mission", nil, doCommandStartMission, nil)
+        missionCommands.addCommand("➤ Begin mission", rootMenu, doCommandStartMission, nil)
         TUM.debugMenu.createMenu() -- Append debug menu to other menus (if debug mode enabled)
     end
 

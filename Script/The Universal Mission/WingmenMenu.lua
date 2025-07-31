@@ -75,11 +75,12 @@ do
     end
 
     function TUM.wingmenMenu.create()
+        local rootMenu = TUM.getOrCreateRootMenu()
         if TUM.settings.getValue(TUM.settings.id.MULTIPLAYER) then return end -- No wingmen in multiplayer
         if TUM.settings.getValue(TUM.settings.id.WINGMEN) <= 1 then return end -- No wingmen
         local isWW2 = (TUM.settings.getValue(TUM.settings) == DCSEx.enums.timePeriod.WORLD_WAR_2) -- Some options are different when time period is WW2
 
-        local rootPath = missionCommands.addSubMenu("✈ Flight")
+        local rootPath = missionCommands.addSubMenu("✈ Flight", rootMenu)
         missionCommands.addCommand("Cover me!", rootPath, radioCommandCoverMe, nil)
 
         ------------------------------------------------------
