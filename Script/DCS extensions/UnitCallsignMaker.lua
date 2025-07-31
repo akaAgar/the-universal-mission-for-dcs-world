@@ -139,7 +139,7 @@ do
 
     local currentCallsigns = {}
     for _,i in pairs(CALLSIGN_TYPE) do
-        currentCallsigns[i] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+        currentCallsigns[i] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     end
 
     local function getCallsignTypeByUnitType(unitType)
