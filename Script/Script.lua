@@ -16,6 +16,7 @@ TUM.logLevel = {
 }
 
 TUM.USE_SPECIFIC_RADIOMENU = true -- Use a specific radio menu for the mission commands, or use the main one?
+TUM.INITIALIZE_AUTOMATICALLY = true -- Automatically initialize the mission when the script is loaded. If false, you must call TUM.initialize() manually.
 
 -------------------------------------
 -- Prints and logs a debug message
@@ -66,118 +67,126 @@ end
 -- Module startup --
 --------------------
 
-do
-    local function startUpMission()
-        TUM.hasStarted = false
+function TUM.initialize()
+    do
+        local function startUpMission()
+            TUM.hasStarted = false
 
-        local coreSettings = {
-            multiplayer = false
-        }
+            local coreSettings = {
+                multiplayer = false
+            }
 
-        if not net or not net.dostring_in then
-            TUM.log("Mission failed to execute. Please copy the provided \"autoexec.cfg\" file to the [Saved Games]\\DCS\\Config directory.\nThe file can be downloaded from github.com/akaAgar/the-universal-mission-for-dcs-world", TUM.logLevel.ERROR)
-            return nil
-        end
-
-        if #DCSEx.envMission.getPlayerGroups() == 0 then
-            TUM.log("No \"Player\" or \"Client\" aircraft slots have been found. Please fix this problem in the mission editor.", TUM.logLevel.ERROR)
-            return nil
-        end
-
-        if world:getPlayer() then
-            coreSettings.multiplayer = false
-
-            if #DCSEx.envMission.getPlayerGroups() > 1 then
-                TUM.log("Multiple players slots have been found in addition to the single-player \"Player\" aircraft. Please fix this problem in the mission editor.", TUM.logLevel.ERROR)
-                return nil
-            end
-        else
-            coreSettings.multiplayer = true
-
-            if #DCSEx.envMission.getPlayerGroups(coalition.side.BLUE) == 0 and #DCSEx.envMission.getPlayerGroups(coalition.side.RED) == 0 then
-                TUM.log("Neither BLUE nor RED coalitions have player slots. Please make sure one coalition has player slots in the mission editor.", TUM.logLevel.ERROR)
+            if not net or not net.dostring_in then
+                TUM.log("Mission failed to execute. Please copy the provided \"autoexec.cfg\" file to the [Saved Games]\\DCS\\Config directory.\nThe file can be downloaded from github.com/akaAgar/the-universal-mission-for-dcs-world", TUM.logLevel.ERROR)
                 return nil
             end
 
-            if #DCSEx.envMission.getPlayerGroups(coalition.side.BLUE) > 0 and #DCSEx.envMission.getPlayerGroups(coalition.side.RED) > 0 then
-                TUM.log("Both coalitions have player slots. The Universal Mission is a purely singleplayer/PvE experience and does not support PvP. Please make sure only one coalition has player slots in the mission editor.", TUM.logLevel.ERROR)
+            if #DCSEx.envMission.getPlayerGroups() == 0 then
+                TUM.log("No \"Player\" or \"Client\" aircraft slots have been found. Please fix this problem in the mission editor.", TUM.logLevel.ERROR)
                 return nil
             end
+
+            if world:getPlayer() then
+                coreSettings.multiplayer = false
+
+                if #DCSEx.envMission.getPlayerGroups() > 1 then
+                    TUM.log("Multiple players slots have been found in addition to the single-player \"Player\" aircraft. Please fix this problem in the mission editor.", TUM.logLevel.ERROR)
+                    return nil
+                end
+            else
+                coreSettings.multiplayer = true
+
+                if #DCSEx.envMission.getPlayerGroups(coalition.side.BLUE) == 0 and #DCSEx.envMission.getPlayerGroups(coalition.side.RED) == 0 then
+                    TUM.log("Neither BLUE nor RED coalitions have player slots. Please make sure one coalition has player slots in the mission editor.", TUM.logLevel.ERROR)
+                    return nil
+                end
+
+                if #DCSEx.envMission.getPlayerGroups(coalition.side.BLUE) > 0 and #DCSEx.envMission.getPlayerGroups(coalition.side.RED) > 0 then
+                    TUM.log("Both coalitions have player slots. The Universal Mission is a purely singleplayer/PvE experience and does not support PvP. Please make sure only one coalition has player slots in the mission editor.", TUM.logLevel.ERROR)
+                    return nil
+                end
+            end
+
+            if not TUM.territories.onStartUp() then return nil end
+            if not TUM.settings.onStartUp(coreSettings) then return nil end -- Must be called after TUM.territories.onStartUp()
+            if not TUM.playerCareer.onStartUp() then return nil end
+            if not TUM.intermission.onStartUp() then return nil end
+            if not TUM.airForce.onStartUp() then return nil end
+            if not TUM.mizCleaner.onStartUp() then return nil end -- Must be called after TUM.settings.onStartUp()
+
+            TUM.hasStarted = true
+
+            return coreSettings
         end
 
-        if not TUM.territories.onStartUp() then return nil end
-        if not TUM.settings.onStartUp(coreSettings) then return nil end -- Must be called after TUM.territories.onStartUp()
-        if not TUM.playerCareer.onStartUp() then return nil end
-        if not TUM.intermission.onStartUp() then return nil end
-        if not TUM.airForce.onStartUp() then return nil end
-        if not TUM.mizCleaner.onStartUp() then return nil end -- Must be called after TUM.settings.onStartUp()
-
-        TUM.hasStarted = true
-
-        return coreSettings
+        if not startUpMission() then
+            trigger.action.outText("A critical error has happened, cannot start the mission.", 3600)
+        end
     end
 
-    if not startUpMission() then
-        trigger.action.outText("A critical error has happened, cannot start the mission.", 3600)
+    -------------------
+    -- Event handler --
+    -------------------
+    do
+        local eventHandler = {}
+
+        function eventHandler:onEvent(event)
+            if not event then return end -- No event
+
+            TUM.ambientRadio.onEvent(event) -- Must be first so other (more important) radio messages will interrupt the "ambient" ones
+            TUM.ambientWorld.onEvent(event)
+            TUM.objectives.onEvent(event)
+            TUM.playerScore.onEvent(event)
+            TUM.mission.onEvent(event)
+            TUM.wingmen.onEvent(event)
+            TUM.mizCleaner.onEvent(event) -- Must be last, can remove units which could cause bugs in other onEvent methods
+        end
+
+        function TUM.onEvent(event)
+            eventHandler:onEvent(event)
+        end
+
+        if TUM.hasStarted then
+            world.addEventHandler(eventHandler)
+        end
+    end
+
+    --------------------------------------------
+    -- Game clock, called every 10-20 seconds --
+    --------------------------------------------
+    do
+        local clockTick = -1
+
+        function TUM.onClockTick(arg, time)
+            local nextTickTime = time + math.random(10, 20)
+            clockTick = clockTick + 1
+
+            TUM.wingmenTasking.onClockTick() -- No need to check the function return, it's just here to check if wingmen target is still alive
+
+            if clockTick % 4 == 0 then
+                if TUM.playerScore.onClockTick() then return nextTickTime end
+                if TUM.mission.onClockTick() then return nextTickTime end
+            elseif clockTick % 4 == 1 then
+                if TUM.airForce.onClockTick(TUM.settings.getPlayerCoalition()) then return nextTickTime end
+            elseif clockTick % 4 == 2 then
+                if TUM.supportAWACS.onClockTick() then return nextTickTime end
+            else
+                if TUM.airForce.onClockTick(TUM.settings.getEnemyCoalition()) then return nextTickTime end
+            end
+
+            if TUM.wingmenContacts.onClockTick() then return nextTickTime end -- Called every tick if no other action has taken place
+
+            return nextTickTime
+        end
+
+        if TUM.hasStarted then
+            timer.scheduleFunction(TUM.onClockTick, nil, timer.getTime() + math.random(10, 15))
+        end
     end
 end
 
--------------------
--- Event handler --
--------------------
-do
-    local eventHandler = {}
-
-    function eventHandler:onEvent(event)
-        if not event then return end -- No event
-
-        TUM.ambientRadio.onEvent(event) -- Must be first so other (more important) radio messages will interrupt the "ambient" ones
-        TUM.ambientWorld.onEvent(event)
-        TUM.objectives.onEvent(event)
-        TUM.playerScore.onEvent(event)
-        TUM.mission.onEvent(event)
-        TUM.wingmen.onEvent(event)
-        TUM.mizCleaner.onEvent(event) -- Must be last, can remove units which could cause bugs in other onEvent methods
-    end
-
-    function TUM.onEvent(event)
-        eventHandler:onEvent(event)
-    end
-
-    if TUM.hasStarted then
-        world.addEventHandler(eventHandler)
-    end
-end
-
---------------------------------------------
--- Game clock, called every 10-20 seconds --
---------------------------------------------
-do
-    local clockTick = -1
-
-    function TUM.onClockTick(arg, time)
-        local nextTickTime = time + math.random(10, 20)
-        clockTick = clockTick + 1
-
-        TUM.wingmenTasking.onClockTick() -- No need to check the function return, it's just here to check if wingmen target is still alive
-
-        if clockTick % 4 == 0 then
-            if TUM.playerScore.onClockTick() then return nextTickTime end
-            if TUM.mission.onClockTick() then return nextTickTime end
-        elseif clockTick % 4 == 1 then
-            if TUM.airForce.onClockTick(TUM.settings.getPlayerCoalition()) then return nextTickTime end
-        elseif clockTick % 4 == 2 then
-            if TUM.supportAWACS.onClockTick() then return nextTickTime end
-        else
-            if TUM.airForce.onClockTick(TUM.settings.getEnemyCoalition()) then return nextTickTime end
-        end
-
-        if TUM.wingmenContacts.onClockTick() then return nextTickTime end -- Called every tick if no other action has taken place
-
-        return nextTickTime
-    end
-
-    if TUM.hasStarted then
-        timer.scheduleFunction(TUM.onClockTick, nil, timer.getTime() + math.random(10, 15))
-    end
+if TUM.INITIALIZE_AUTOMATICALLY then
+    TUM.initialize()
+else
+    TUM.log("TUM has been loaded, but not initialized. Call TUM.initialize() to start the mission.", TUM.logLevel.INFO)
 end
