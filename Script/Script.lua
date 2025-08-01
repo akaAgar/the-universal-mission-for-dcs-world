@@ -9,33 +9,146 @@ TUM.VERSION_STRING = "0.1.250722"
 
 TUM.DEBUG_MODE = __DEBUG_MODE__
 
+--------------------------------------
+--- Logging system
+--------------------------------------
+
 TUM.logLevel = {
+    TRACE = -2,
+    DEBUG = -1,
     INFO = 0,
     WARNING = 1,
     ERROR = 2
 }
+
+TUM.Logger = {}
+
+function TUM.Logger.splitText(text)
+    local tbl = {}
+    while text:len() > 4000 do
+        local sub = text:sub(1, 4000)
+        text = text:sub(4001)
+        table.insert(tbl, sub)
+    end
+    table.insert(tbl, text)
+    return tbl
+end
+
+function TUM.Logger.formatText(text, ...)
+    if not text then
+        return ""
+    end
+    if type(text) ~= 'string' then
+        text = TUM.p(text)
+    else
+        local args = ...
+        if args and args.n and args.n > 0 then
+            local pArgs = {}
+            for i=1,args.n do
+                pArgs[i] = TUM.p(args[i])
+            end
+                text = text:format(unpack(pArgs))
+            end
+        end
+    local fName = nil
+    local cLine = nil
+    if debug and debug.getinfo then
+        local dInfo = debug.getinfo(3)
+        fName = dInfo.name
+        cLine = dInfo.currentline
+        -- local fsrc = dinfo.short_src
+        --local fLine = dInfo.linedefined
+    end
+    if fName and cLine then
+        return fName .. '|' .. cLine .. ': ' .. text
+    elseif cLine then
+        return cLine .. ': ' .. text
+    else
+        return ' ' .. text
+    end
+end
+
+function TUM.Logger.print(level, text)
+    local texts = TUM.Logger.splitText(text)
+    local levelChar = 'E'
+    local logFunction = function(messageForLogfile, messageForUser)
+        trigger.action.outText("ERROR: "..messageForUser, 3600)
+        env.error(messageForLogfile)
+    end
+    if level == TUM.logLevel.WARNING then
+        levelChar = 'W'
+        logFunction = function(messageForLogfile, messageForUser)
+            trigger.action.outText("WARNING: "..messageForUser, 10)
+            env.warning(messageForLogfile)
+        end
+    elseif level == TUM.logLevel.INFO then
+        levelChar = 'I'
+        logFunction = function(messageForLogfile, messageForUser)
+            if TUM.DEBUG_MODE then -- Info messages are only printed out if debug mode is enabled
+                trigger.action.outText(messageForUser, 3)
+            end
+            env.info(messageForLogfile)
+        end
+    elseif level == TUM.logLevel.DEBUG then
+        levelChar = 'D'
+        logFunction = env.info
+    elseif level == TUM.logLevel.TRACE then
+        levelChar = 'T'
+        logFunction = env.info
+    end
+    for i = 1, #texts do
+        if i == 1 then
+            local theText =  'TUM|' .. levelChar .. '|' .. texts[i]
+            logFunction(theText, texts[i])
+        else
+            local theText = texts[i]
+            logFunction(theText, theText)
+        end
+    end
+end
+
+function TUM.Logger.error(text, ...)
+    text = TUM.Logger.formatText(text, arg)
+    local mText = text
+    if debug and debug.traceback then
+        mText = mText .. "\n" .. debug.traceback()
+    end
+    TUM.Logger.print(TUM.logLevel.ERROR, mText)
+end
+
+function TUM.Logger.warn(text, ...)
+    text = TUM.Logger.formatText(text, arg)
+    TUM.Logger.print(TUM.logLevel.WARNING, text)
+end
+
+function TUM.Logger.info(text, ...)
+    text = TUM.Logger.formatText(text, arg)
+    TUM.Logger.print(TUM.logLevel.INFO, text)
+end
+
+function TUM.Logger.debug(text, ...)
+    if TUM.DEBUG_MODE then
+        text = TUM.Logger.formatText(text, arg)
+        TUM.Logger.print(TUM.logLevel.DEBUG, text)
+    end
+end
+
+function TUM.Logger.trace(text, ...)
+    if TUM.DEBUG_MODE then
+        text = TUM.Logger.formatText(text, arg)
+        TUM.Logger.print(TUM.logLevel.TRACE, text)
+    end
+end
 
 -------------------------------------
 -- Prints and logs a debug message
 -- @param message The message
 -- @param logLevel Is it a warning, error or info messages (as defined in TUM.logLevel). Info messages are not printed out unless debug mode is enabled.
 -------------------------------------
+
 function TUM.log(message, logLevel)
     logLevel = logLevel or TUM.logLevel.INFO
-
-    if logLevel == TUM.logLevel.ERROR then
-        trigger.action.outText("ERROR: "..message, 3600)
-        env.warning("TUM - ERROR: "..message, false)
-    elseif logLevel == TUM.logLevel.WARNING then
-        trigger.action.outText("WARNING: "..message, 10)
-        env.warning("TUM - WARNING: "..message, false)
-    else
-        if TUM.DEBUG_MODE then -- Info messages are only printed out if debug mode is enabled
-            trigger.action.outText(message, 3)
-        end
-
-        env.info("TUM: "..message, false)
-    end
+    TUM.Logger.print(logLevel, message)
 end
 
 --[[DCS EXTENSIONS]]--
