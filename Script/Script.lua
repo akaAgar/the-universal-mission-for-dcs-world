@@ -15,6 +15,8 @@ TUM.logLevel = {
     ERROR = 2
 }
 
+TUM.USE_SPECIFIC_RADIOMENU = true -- Use a specific radio menu for the mission commands, or use the main one?
+
 -------------------------------------
 -- Prints and logs a debug message
 -- @param message The message
@@ -36,6 +38,22 @@ function TUM.log(message, logLevel)
 
         env.info("TUM: "..message, false)
     end
+end
+
+TUM.rootMenu = nil
+function TUM.getOrCreateRootMenu(reset) -- Get or create the root menu for the mission commands; if reset is true, the menu will be cleared and recreated
+    if reset then
+        missionCommands.removeItem(TUM.rootMenu) -- Clear the menu
+        TUM.rootMenu = nil
+        TUM.getOrCreateRootMenu() -- Recreate the root menu
+    end
+    if not TUM.rootMenu then
+        if TUM.USE_SPECIFIC_RADIOMENU then
+            local rootMenuTitle = "✈ TUM"
+            TUM.rootMenu = missionCommands.addSubMenu(rootMenuTitle)
+        end
+    end
+    return TUM.rootMenu
 end
 
 --[[DCS EXTENSIONS]]--
