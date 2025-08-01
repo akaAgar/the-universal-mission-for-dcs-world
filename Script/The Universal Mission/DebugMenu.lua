@@ -94,7 +94,7 @@ do
     function TUM.debugMenu.createMenu()
         if not TUM.DEBUG_MODE then return end
 
-        local rootMenu = missionCommands.addSubMenu("[DEBUG]")
+        local rootMenu = missionCommands.addSubMenu("[DEBUG]", TUM.getOrCreateRootMenu())
         missionCommands.addCommand("Detonate - BOOM map markers", rootMenu, doMarkersBoom, nil)
         missionCommands.addCommand("Detonate - AIRBOOM map markers", rootMenu, doMarkersAirBoom, nil)
         missionCommands.addCommand("Wingman - kill", rootMenu, doKillWingman, nil)

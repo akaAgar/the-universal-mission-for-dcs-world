@@ -125,7 +125,27 @@ do
             elseif DCSEx.string.startsWith(z.name:lower(), "water") then
                 table.insert(waterZones, z)
             else
-                table.insert(missionZones, z)
+                local onlyZonesStartingWith = TUM.administrativeSettings.getValue(TUM.administrativeSettings.ONLY_ZONES_STARTINGWITH)
+                if onlyZonesStartingWith and #onlyZonesStartingWith > 0 then
+                    if type(onlyZonesStartingWith) ~= "table" then
+                        onlyZonesStartingWith = { onlyZonesStartingWith }
+                    end
+                    for _, zonePrefix in ipairs(onlyZonesStartingWith) do
+                        if DCSEx.string.startsWith(z.name:lower(), zonePrefix:lower()) then
+                            table.insert(missionZones, z)
+                            break
+                        end
+                    end
+                else
+                    local ignoreZonesStartingWith = TUM.administrativeSettings.getValue(TUM.administrativeSettings.IGNORE_ZONES_STARTINGWITH)
+                    if ignoreZonesStartingWith then
+                        if not DCSEx.string.startsWith(z.name:lower(), ignoreZonesStartingWith:lower()) then
+                            table.insert(missionZones, z)
+                        end
+                    else
+                        table.insert(missionZones, z)
+                    end
+                end
             end
         end
 

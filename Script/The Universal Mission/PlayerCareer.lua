@@ -146,10 +146,11 @@ do
     -- Appends the career menu to the F10 menu. Only works in single-player missions
     -------------------------------------
     function TUM.playerCareer.createMenu()
+        local rootMenu = TUM.getOrCreateRootMenu()
         if not DCSEx.io.canReadAndWrite() then return end -- IO disabled, career and scoring disabled
         if TUM.settings.getValue(TUM.settings.id.MULTIPLAYER) then return end -- No career in multiplayer
 
-        missionCommands.addCommand("✪ View pilot career stats", nil, TUM.playerCareer.displayMedalBox, true)
+        missionCommands.addCommand("✪ View pilot career stats", rootMenu, TUM.playerCareer.displayMedalBox, true)
     end
 
     -------------------------------------
