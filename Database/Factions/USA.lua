@@ -21,12 +21,12 @@ do
         [DCSEx.enums.unitFamily.AIRDEFENSE_SAM_SHORT] = { "rapier_fsa", "Roland ADS" },
         [DCSEx.enums.unitFamily.AIRDEFENSE_SAM_SHORT_IR] = { "M6 Linebacker", "M48 Chaparral", "M1097 Avenger" },
 
-        [DCSEx.enums.unitFamily.GROUND_APC] = { "AAV7", "Cobra", "LAV-25", "M-2 Bradley", "M-113", "M1045 HMMWV TOW", "M1126 Stryker ICV", "M1128 Stryker MGS", "Marder", "MCV-80", "MLRS FDDM", "TPZ" },
-        [DCSEx.enums.unitFamily.GROUND_ARTILLERY] = { "M-109", "MLRS" },
+        [DCSEx.enums.unitFamily.GROUND_APC] = { "AAV7", "Cobra", "LAV-25", "M-2 Bradley", "M-113", "M1045 HMMWV TOW", "M1126 Stryker ICV", "M1128 Stryker MGS", "Marder", "MCV-80", "MLRS FDDM", "TPZ", "CHAP_M1130", "CHAP_MATV" },
+        [DCSEx.enums.unitFamily.GROUND_ARTILLERY] = { "M-109", "MLRS", "CHAP_M142_ATACMS_M48", "CHAP_M142_GMLRS_M31" },
         [DCSEx.enums.unitFamily.GROUND_INFANTRY] = { "Soldier M4 GRG", "Soldier M4", "Soldier M249", "Soldier RPG" },
         [DCSEx.enums.unitFamily.GROUND_MBT] = { "Challenger2", "Leclerc", "Leopard-2", "Leopard1A3", "M-1 Abrams", "Merkava_Mk4" },
         [DCSEx.enums.unitFamily.GROUND_SS_MISSILE] = { "Scud_B" },
-        [DCSEx.enums.unitFamily.GROUND_UNARMED] = { "Land_Rover_101_FC", "Land_Rover_109_S3", "M 818" },
+        [DCSEx.enums.unitFamily.GROUND_UNARMED] = { "Land_Rover_101_FC", "Land_Rover_109_S3", "M 818", "CHAP_M1083" },
 
         [DCSEx.enums.unitFamily.HELICOPTER_ATTACK] = { "AH-1W", "AH-64D", "OH-58D", "SA342L", "SA342M", "SA342Minigun", "SA342Mistral" },
         [DCSEx.enums.unitFamily.HELICOPTER_TRANSPORT] = { "CH-47D", "CH-53E", "SH-60B", "UH-60A" },

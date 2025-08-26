@@ -75,6 +75,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
 <h3>Planned for next version (could be subject to change)</h3>
 
 - Additional content
+  - [x] Added new units (Currenthill unit pack) from DCS 2.9.19.13478
   - [ ] At least partial Germany map support
 - AI improvements
   - [ ] AI wingmen should engage tracking radars first when told to engage SAM sites, in order to disable the site ASAP

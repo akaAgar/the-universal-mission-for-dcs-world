@@ -24,14 +24,14 @@ do
         [DCSEx.enums.unitFamily.AIRDEFENSE_SAM_LONG] = { "*SA-2", "*SA-10" },
         [DCSEx.enums.unitFamily.AIRDEFENSE_SAM_LONG] = { "*SA-10" },
         [DCSEx.enums.unitFamily.AIRDEFENSE_SAM_MEDIUM] = { "*SA-3", "*SA-6", "*SA-11" },
-        [DCSEx.enums.unitFamily.AIRDEFENSE_SAM_SHORT] = { "2S6 Tunguska", "Osa 9A33 ln", "Tor 9A331" },
+        [DCSEx.enums.unitFamily.AIRDEFENSE_SAM_SHORT] = { "2S6 Tunguska", "Osa 9A33 ln", "Tor 9A331", "CHAP_PantsirS1", "CHAP_TorM2" },
         [DCSEx.enums.unitFamily.AIRDEFENSE_SAM_SHORT_IR] = { "Strela-1 9P31", "Strela-10M3" },
 
-        [DCSEx.enums.unitFamily.GROUND_APC] = { "BMD-1", "BMP-1", "BMP-2", "BMP-3", "Boman", "BRDM-2", "BTR_D", "BTR-80", "BTR-82A", "Grad_FDDM", "MTLB" },
-        [DCSEx.enums.unitFamily.GROUND_ARTILLERY] = { "Grad-URAL", "SAU 2-C9", "SAU Akatsia", "SAU Gvozdika", "SAU Msta", "Smerch", "SpGH_Dana", "Uragan_BM-27" },
+        [DCSEx.enums.unitFamily.GROUND_APC] = { "BMD-1", "BMP-1", "BMP-2", "BMP-3", "Boman", "BRDM-2", "BTR_D", "BTR-80", "BTR-82A", "Grad_FDDM", "MTLB", "CHAP_BMPT" },
+        [DCSEx.enums.unitFamily.GROUND_ARTILLERY] = { "Grad-URAL", "SAU 2-C9", "SAU Akatsia", "SAU Gvozdika", "SAU Msta", "Smerch", "SpGH_Dana", "Uragan_BM-27", "CHAP_TOS1A" },
         [DCSEx.enums.unitFamily.GROUND_INFANTRY] = { "Infantry AK", "Infantry AK ver2", "Infantry AK ver3", "Paratrooper AKS-74", "Paratrooper RPG-16", "Soldier AK" },
         [DCSEx.enums.unitFamily.GROUND_MBT] = { "T-55", "T-72B", "T-80UD", "T-90" },
-        [DCSEx.enums.unitFamily.GROUND_SS_MISSILE] = { "Scud_B" },
+        [DCSEx.enums.unitFamily.GROUND_SS_MISSILE] = { "Scud_B", "CHAP_9K720_HE" },
         [DCSEx.enums.unitFamily.GROUND_UNARMED] = { "Ural-375", "Ural-4320 APA-5D", "Ural-4320T" },
 
         [DCSEx.enums.unitFamily.HELICOPTER_ATTACK] = { "Ka-50", "Mi-24V", "Mi-28N" },
@@ -52,7 +52,7 @@ do
         [DCSEx.enums.unitFamily.SHIP_CRUISER] = { "MOSCOW", "PIOTR" },
         [DCSEx.enums.unitFamily.SHIP_FRIGATE] = { "NEUSTRASH", "REZKY" },
         [DCSEx.enums.unitFamily.SHIP_LIGHT] = { "speedboat" },
-        [DCSEx.enums.unitFamily.SHIP_MISSILE_BOAT] = { "ALBATROS", "BDK-775", "MOLNIYA" },
+        [DCSEx.enums.unitFamily.SHIP_MISSILE_BOAT] = { "ALBATROS", "BDK-775", "MOLNIYA", "CHAP_Project22160_TorM2KM" },
         [DCSEx.enums.unitFamily.SHIP_SUBMARINE] = { "IMPROVED_KILO", "KILO", "SOM" },
 
         -- [DCSEx.enums.unitFamily.STATIC_STRUCTURE] = { "af_hq", ".Command Center", "Building01_PBR", "Building02_PBR", "Building03_PBR", "Building04_PBR", "Building05_PBR", "Bunker", "Chemical tank A", "Comms tower M", "FARP Fuel Depot", "outpost", "Sandbox", "Workshop A" },
