@@ -55,7 +55,7 @@ do
                 local u = DCSEx.world.getUnitByID(id)
                 if u then u:destroy() end
             end
-            TUM.log("Removed "..tostring(#aiWingMenToRemove).." AI wingmen from the mission.\nPlease do not add AI wingmen to the mission, The Universal Mission uses its own wingman system.", TUM.logger.logLevel.WARNING)
+            TUM.log("Removed "..tostring(#aiWingMenToRemove).." AI wingmen from the mission.\nPlease do not add AI wingmen to the mission, The Universal Mission relies on its own wingman system.", TUM.logger.logLevel.WARNING)
         end
     end
 
