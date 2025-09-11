@@ -116,6 +116,8 @@ function TUM.initialize()
             if not event then return end -- No event
 
             TUM.ambientRadio.onEvent(event) -- Must be first so other (more important) radio messages will interrupt the "ambient" ones
+            TUM.airForce.onEvent(event)
+            TUM.ambientWorld.onEvent(event)
             TUM.ambientWorld.onEvent(event)
             TUM.objectives.onEvent(event)
             TUM.playerScore.onEvent(event)

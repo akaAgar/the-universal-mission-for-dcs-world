@@ -80,7 +80,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
 - AI improvements
   - [ ] AI wingmen should engage tracking radars first when told to engage SAM sites, in order to disable the site ASAP
 - Balance improvements
-  - [ ] Lowered enemy CAP respawn rate
+  - [x] Enemy CAP respawn rate now decreases the more enemy planes are shot
   - [ ] Tweaked XP requirements for medals/promotions
 - Bug fixes
   - [ ] AWACS datalinked contacts not showing on SA pages

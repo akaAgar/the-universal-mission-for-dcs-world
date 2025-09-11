@@ -6,9 +6,13 @@
 TUM.airForce = {}
 
 do
+    local SUPPRESSION_INCREASE_ON_KILL = 0.35 -- Value added to enemyCAPSuppression each time an enemy aircraft is shot down
+
     local desiredUnitCount = { 4, 4 } -- Desired max number of aircraft in the air at any single time
     local fighterGroups = { {}, {} }
 
+    local enemyCAPSuppression = 1
+    local enemyCAPSuppressionTimer = 1
     local playerCenter = nil
 
     local function getSkillLevel(side)
@@ -65,13 +69,24 @@ do
     local function launchNewAircraftGroup(side, airbases)
         local groupSize = DCSEx.table.getRandom({ 1, 2, 2, 2, 2, 3, 3, 4 })
         groupSize = math.min(groupSize, desiredUnitCount[side] - getAirborneUnitCount(side))
-        if groupSize <= 0 then return false end
+        if groupSize <= 0 then return false end -- No aircraft slots left
 
         local faction = TUM.settings.getEnemyFaction()
         if side == TUM.settings.getPlayerCoalition() then faction = TUM.settings.getPlayerFaction() end
 
         local units = Library.factions.getUnits(faction, DCSEx.enums.unitFamily.PLANE_FIGHTER, groupSize, true)
         if not units or #units == 0 then return false end -- No aircraft found
+
+        -- If enemy CAP suppression timer > 0, decrement it by 1 but don't spawn any aircraft
+        if side == TUM.settings.getEnemyCoalition() then
+            enemyCAPSuppressionTimer = enemyCAPSuppressionTimer - 1
+            if enemyCAPSuppressionTimer > 0 then
+                TUM.log("Enemy CAP is still suppressed (suppression="..tostring(enemyCAPSuppressionTimer).."), no enemy CAP spawned.")
+                return false
+            end
+
+            enemyCAPSuppressionTimer = enemyCAPSuppression
+        end
 
         local launchAirbase = airbases[DCSEx.math.clamp(math.random(1, math.ceil(math.sqrt(#airbases))), 1, #airbases)]
         local originPt = DCSEx.math.vec3ToVec2(launchAirbase:getPoint())
@@ -150,7 +165,6 @@ do
                     randomizeDesiredAircraftCount(side)
                 end
 
-                -- return launchNewAircraftGroup(side, airbases)
                 return launchNewAircraftGroup(side, validAirbases)
             end
         end
@@ -168,6 +182,23 @@ do
         if TUM.objectives.getCount() <= 0 then return false end -- No objectives, nothing to defend for CAP
 
         return updateAirForce(side)
+    end
+
+    -------------------------------------
+    -- Called when an event is raised
+    -- @param event The DCS World event
+    -------------------------------------
+    function TUM.airForce.onEvent(event)
+        if not event.initiator then return end
+        if Object.getCategory(event.initiator) ~= Object.Category.UNIT then return end
+        if event.id ~= world.event.S_EVENT_UNIT_LOST then return end
+
+        local groupID = DCSEx.dcs.getGroupIDAsNumber(event.initiator:getGroup())
+
+        if DCSEx.table.contains(fighterGroups[TUM.settings.getEnemyCoalition()], groupID) then
+            enemyCAPSuppression = enemyCAPSuppression + SUPPRESSION_INCREASE_ON_KILL
+            TUM.log("Enemy CAP suppression increased to "..tostring(enemyCAPSuppression))
+        end
     end
 
     function TUM.airForce.create()
@@ -189,6 +220,10 @@ do
                 DCSEx.world.destroyGroupByID(id)
             end
         end
+
+        -- Reset enemy CAP suppression
+        enemyCAPSuppression = 1
+        enemyCAPSuppressionTimer = 1
 
         fighterGroups = { {}, {} }
     end
