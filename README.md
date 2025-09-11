@@ -93,7 +93,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
     - [ ] Weather report
   - [ ] Administrative settings
   - [x] Use of "Client" slot instead of "Player" slot even in single-player missions, allowing the player to respawn on death/ejection instead of having to start the whole mission again
-  - [ ] Single-player mission autostart on player take off
+  - [x] Mission now autostarts (if it wasn't started yet) when all players have taken off
 - Quality of life/minor tweaks
   - [ ] AI wingmen "Two was shot down!" call when witnessing another wingman killed
   - [ ] AI wingmen "Winchester!" call when out of ammo

@@ -10,31 +10,6 @@ TUM.intermission = {}
 do
     local missionZonesMarkers = {}
 
-    local function doCommandStartMission()
-        local players = DCSEx.world.getAllPlayers()
-
-        if #players == 0 then
-            trigger.action.outText("No player slots occupied. At least one client slot must be occupied by a player to start the mission.", 5)
-            trigger.action.outSound("UI-Error.ogg")
-            return
-        end
-
-        if not TUM.settings.getValue(TUM.settings.id.MULTIPLAYER) then
-            for _,p in ipairs(players) do
-                if p:inAir() then
-                    trigger.action.outText("Cannot start a single player mission while the player is in the air. Please land before starting the mission.", 5)
-                    trigger.action.outSound("UI-Error.ogg")
-                    return
-                end
-            end
-        end
-
-        trigger.action.outText("Generating mission and loading assets, this can take some time...", 5)
-
-        -- Add a little delay for the "Generating mission..." message be printed out. Once generation begins, the main DCS thread will be to busy to output anything.
-        timer.scheduleFunction(TUM.mission.beginMission, false, timer.getTime() + 1)
-    end
-
     local function setSetting(args)
         if not args.id or not args.value then return end
 
@@ -74,6 +49,32 @@ do
         end
     end
 
+    function TUM.intermission.doCommandStartMission(allowEvenInAir)
+        allowEvenInAir = allowEvenInAir or false
+        local players = DCSEx.world.getAllPlayers()
+
+        if #players == 0 then
+            trigger.action.outText("No player slots occupied. At least one client slot must be occupied by a player to start the mission.", 5)
+            trigger.action.outSound("UI-Error.ogg")
+            return
+        end
+
+        if not allowEvenInAir and not TUM.settings.getValue(TUM.settings.id.MULTIPLAYER) then
+            for _,p in ipairs(players) do
+                if p:inAir() then
+                    trigger.action.outText("Cannot start a single player mission while the player is in the air. Please land before starting the mission.", 5)
+                    trigger.action.outSound("UI-Error.ogg")
+                    return
+                end
+            end
+        end
+
+        trigger.action.outText("Generating mission and loading assets, this can take some time...", 5)
+
+        -- Add a little delay for the "Generating mission..." message be printed out. Once generation begins, the main DCS thread will be to busy to output anything.
+        timer.scheduleFunction(TUM.mission.beginMission, false, timer.getTime() + 1)
+    end
+
     function TUM.intermission.removeMissionZonesMarkers()
         for _,id in ipairs(missionZonesMarkers) do
             trigger.action.removeMark(id)
@@ -107,7 +108,7 @@ do
         createSubMenu(TUM.settings.id.WINGMEN, settingsMenu)
         createSubMenu(TUM.settings.id.AI_CAP, settingsMenu)
         TUM.playerCareer.createMenu()
-        missionCommands.addCommand("➤ Begin mission", rootMenu, doCommandStartMission, nil)
+        missionCommands.addCommand("➤ Begin mission", rootMenu, TUM.intermission.doCommandStartMission, false)
         TUM.debugMenu.createMenu() -- Append debug menu to other menus (if debug mode enabled)
     end
 

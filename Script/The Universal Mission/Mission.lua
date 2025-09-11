@@ -193,10 +193,20 @@ do
     -- @param event The DCS World event
     -------------------------------------
     function TUM.mission.onEvent(event)
-        if missionStatus == TUM.mission.status.NONE then return end
         if not event.initiator then return end
-        if Object.getCategory(event.initiator) ~= Object.Category.UNIT then return end
-        if not event.initiator:getPlayerName() then return end
+        if Object.getCategory(event.initiator) ~= Object.Category.UNIT then return end -- Initiator is not an unit
+        if not event.initiator:getPlayerName() then return end -- Initiator is not a player
+
+        -- Start mission (it wasn't started yet) when all players have taken off
+        if event.id == world.event.S_EVENT_TAKEOFF then
+            if missionStatus == TUM.mission.status.NONE and #DCSEx.world.getPlayersOnGround(TUM.settings.getPlayerCoalition()) == 0 then
+                TUM.intermission.doCommandStartMission(true)
+                -- Force wingman spawning because the "on player takeoff spawn wingman" function won't be called as mission wasn't started yet when the "take off" even was raised
+                timer.scheduleFunction(TUM.wingmen.create, nil, timer.getTime() + 3)
+            end
+        end
+
+        if missionStatus == TUM.mission.status.NONE then return end
 
         -- All objectives complete and all players on the ground? Mission is complete
         if event.id == world.event.S_EVENT_RUNWAY_TOUCH or event.id == world.event.S_EVENT_PLAYER_ENTER_UNIT or event.id == world.event.S_EVENT_PLAYER_LEAVE_UNIT then
