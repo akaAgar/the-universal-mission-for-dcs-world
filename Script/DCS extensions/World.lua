@@ -16,6 +16,7 @@
 -- DCSEx.world.getMarkerByText(text, coalition)
 -- DCSEx.world.getNextMarkerID()
 -- DCSEx.world.getPlayersInAir(side)
+-- DCSEx.world.getPlayersOnGround(side)
 -- DCSEx.world.getSceneriesInZone(center, radius, minHealth)
 -- DCSEx.world.getSpawnPoint(zone, surfaceType, safeRadius)
 -- DCSEx.world.getStaticObjectByID(staticID)
@@ -326,6 +327,30 @@ do
         end
 
         return playersInAir
+    end
+
+    -------------------------------------
+    -- Returns a table of all player units currently NOT in the air (on ramp/ground/runway)
+    -------------------------------------
+    -- @param side Coalition the players must belong to, or nil to search all coalitions
+    -- @return A table of player objects
+    -------------------------------------
+    function DCSEx.world.getPlayersOnGround(side)
+        local players = {}
+        if side then
+            players = coalition.getPlayers(side)
+        else
+            players = DCSEx.world.getAllPlayers()
+        end
+
+        local playersOnGround = {}
+        for _,p in ipairs(players) do
+            if not p:inAir() then
+                table.insert(playersOnGround, p)
+            end
+        end
+
+        return playersOnGround
     end
 
     -------------------------------------
