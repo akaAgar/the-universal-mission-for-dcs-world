@@ -35,7 +35,7 @@ do
             end
             navInfo = navInfo..DCSEx.world.getCoordinatesAsString(obj.waypoint3, false)
 
-            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(p), "commandObjectiveCoordinates"..msgIDSuffix, { obj.name, navInfo }, "Command", delayRadioAnswer)
+            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(p), "commandObjectiveCoordinates"..msgIDSuffix, { obj.name, navInfo }, "Command", delayRadioAnswer, nil, nil, 2.5)
         end
     end
 

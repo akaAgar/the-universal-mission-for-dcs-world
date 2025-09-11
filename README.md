@@ -98,7 +98,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
   - [ ] AI wingmen "Two was shot down!" call when witnessing another wingman killed
   - [ ] AI wingmen "Winchester!" call when out of ammo
   - [x] Increased AWACS aircraft spawn altitude
-  - [ ] Target coordinates radio message displayed for a longer time so players have the time to write them down or enter them in their flight computer
+  - [x] Target coordinates radio message displayed for a longer time so players have the time to write them down or enter them in their flight computer
 
 ### High priority
 
