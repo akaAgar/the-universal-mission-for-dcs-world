@@ -50,7 +50,7 @@ do
         end
         message = DCSEx.string.firstToUpper(message)
 
-        local duration = DCSEx.string.getReadingTime(message)
+        local duration = DCSEx.string.getReadingTime(message) * args.displayTimeMultiplier
 
         -- Print message
         trigger.action.outTextForUnit(args.unitID, callsign:upper()..": "..message, duration, false)
@@ -73,12 +73,13 @@ do
     -- @param delayed Should the message be delayed (used for message answers)
     -- @param functionToRun Function to run when the message is played
     -- @param functionParameters Parameters for the function to run when the message is played
+    -- @param displayTimeMultiplier Multiplier for how long the message should be displayed (2.0=twice as long, 0.5=half as long). Default is 1.0
     -------------------------------------
-    function TUM.radio.playForAll(messageID, replacements, callsign, delayed, functionToRun, functionParameters)
+    function TUM.radio.playForAll(messageID, replacements, callsign, delayed, functionToRun, functionParameters, displayTimeMultiplier)
         local players = DCSEx.world.getAllPlayers()
 
         for _, unit in pairs(players) do
-            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(unit), messageID, replacements, callsign, delayed, functionToRun, functionParameters)
+            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(unit), messageID, replacements, callsign, delayed, functionToRun, functionParameters, displayTimeMultiplier)
         end
     end
 
@@ -91,12 +92,13 @@ do
     -- @param delayed Should the message be delayed (used for message answers)
     -- @param functionToRun Function to run when the message is played
     -- @param functionParameters Parameters for the function to run when the message is played
+    -- @param displayTimeMultiplier Multiplier for how long the message should be displayed (2.0=twice as long, 0.5=half as long). Default is 1.0
     -------------------------------------
-    function TUM.radio.playForCoalition(coalitionID, messageID, replacements, callsign, delayed, functionToRun, functionParameters)
+    function TUM.radio.playForCoalition(coalitionID, messageID, replacements, callsign, delayed, functionToRun, functionParameters, displayTimeMultiplier)
         local players = coalition.getPlayers(coalitionID)
 
         for _,u in pairs(players) do
-            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(u), messageID, replacements, callsign, delayed, functionToRun, functionParameters)
+            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(u), messageID, replacements, callsign, delayed, functionToRun, functionParameters, displayTimeMultiplier)
         end
     end
 
@@ -109,13 +111,14 @@ do
     -- @param delayed Should the message be delayed (used for message answers)
     -- @param functionToRun Function to run when the message is played
     -- @param functionParameters Parameters for the function to run when the message is played
+    -- @param displayTimeMultiplier Multiplier for how long the message should be displayed (2.0=twice as long, 0.5=half as long). Default is 1.0
     -------------------------------------
-    function TUM.radio.playForGroup(groupID, messageID, replacements, callsign, delayed, functionToRun, functionParameters)
+    function TUM.radio.playForGroup(groupID, messageID, replacements, callsign, delayed, functionToRun, functionParameters, displayTimeMultiplier)
         local group = DCSEx.world.getGroupByID(groupID)
         if not group then return end -- group does not exist
 
         for _,u in pairs(group:getUnits()) do
-            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(u), messageID, replacements, callsign, delayed, functionToRun, functionParameters)
+            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(u), messageID, replacements, callsign, delayed, functionToRun, functionParameters, displayTimeMultiplier)
         end
     end
 
@@ -129,8 +132,9 @@ do
     -- @param delayed Should the message be delayed (used for message answers)
     -- @param functionToRun Function to run when the message is played
     -- @param functionParameters Parameters for the function to run when the message is played
+    -- @param displayTimeMultiplier Multiplier for how long the message should be displayed (2.0=twice as long, 0.5=half as long). Default is 1.0
     -------------------------------------
-    function TUM.radio.playForUnit(unitID, messageID, replacements, callsign, delayed, functionToRun, functionParameters)
+    function TUM.radio.playForUnit(unitID, messageID, replacements, callsign, delayed, functionToRun, functionParameters, displayTimeMultiplier)
         if not messageID then return end
         if not Library.radioMessages[messageID] then return end
         delayed = delayed or false
@@ -141,6 +145,7 @@ do
 
         local radioArgs = {
             callsign = callsign,
+            displayTimeMultiplier = math.max(0.1, displayTimeMultiplier or 1.0),
             functionToRun = functionToRun,
             functionParameters = functionParameters,
             messageID = messageID,
