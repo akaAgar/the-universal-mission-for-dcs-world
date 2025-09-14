@@ -11,7 +11,7 @@ The Universal Mission for DCS World is a fully dynamic single-player/PvE mission
 - Can generate any kind of mission: ground attack, interception, strike, airbase attack, CAS, CAP, and more
 - Completely dynamic, no two missions are ever the same
 - Entirely self-contained inside a .miz file, no need for any external program
-- More than 300 voiced radio messages for immersive and realistic coms
+- More than 325 voiced radio messages for immersive and realistic coms
 - Supports both single-player and small-scale PvE on closed servers
 - Persistent single player career mode, with awards and promotions. Dying won't reset your progress, but you have to come back to base alive for your kills and completed objectives to be saved to your profile, so watch out for SAMs on your way home
 - All new AI wingman system, smarter and more immersive than DCS's original wingmen

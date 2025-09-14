@@ -201,15 +201,13 @@ Library.radioMessages = {
         "$1, off the deck, forming up now."
     },
 
-    atcRequireNearestAirbase = { -- TODO: voiceover
+    atcRequireNearestAirbase = {
         "Roger. Vectoring you to the nearest airbase.\n\n$1",
         "Copy. Coordinates to nearest field inbound.\n\n$1",
         "Roger. Guide you direct to the nearest recovery airfield.\n\n$1"
     },
-    atcRequireNearestAirbaseNone = { -- TODO: voiceover
-        "No friendly airbase is available at the moment.",
-    },
-    atcWeatherUpdate = { -- TODO: voiceover
+    atcRequireNearestAirbaseNone = "No friendly airbase is available at the moment.",
+    atcWeatherUpdate = {
         "Roger. Weather info coming up now.\n\n$1",
         "Copy. Weather report inbound.\n\n$1",
         "This is control, checking conditions now.\n\n$1",
@@ -309,13 +307,13 @@ Library.radioMessages = {
         "$1, target already marked with smoke."
     },
 
-    playerATCRequireNearestAirbase = { -- TODO: voiceover
+    playerATCRequireNearestAirbase = {
         "Control, request vectors to nearest suitable base for recovery.",
         "Control, requesting nearest friendly airfield for landing, over.",
         "Control, negative on original destination, request alternate field nearest current position.",
         "Control, requesting location and frequency for closest towered airfield."
     },
-    playerATCWeatherUpdate = { -- TODO: voiceover
+    playerATCWeatherUpdate = {
         "Control, request latest weather update, over.",
         "Control, need current weather and visibility.",
         "Control, what's the weather looking like out there?",
