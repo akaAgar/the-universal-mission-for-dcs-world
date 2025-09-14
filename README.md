@@ -32,8 +32,7 @@ The Universal Mission for DCS World is a fully dynamic single-player/PvE mission
 
 <h4>Known bugs in latest release</h4>
 
-- AWACS datalink info is now displayed on SA pages
-- Some player callsigns may cause an error on mission start, stick to the "basic" DCS callsigns (Enfield, Springfield, Uzi, Colt, Dodge, Ford, Chevy and Pontiac) to avoid this problem
+- AWACS datalink info not displayed properly on SA pages
 
 ## How to use/play The Universal Mission?
 
