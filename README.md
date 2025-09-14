@@ -164,7 +164,7 @@ The core script is quite simple and small, I probably won't need too much help w
   - Balance improvements
     - Enemy CAP respawn rate now decreases the more enemy planes are shot
   - Bug fixes
-    - Some player callsigns causing a script error at startup
+    - Some player callsigns were causing a script error at startup
     - Fixed wrong filename in "enemy infantry killed" messages
     - Removed unused zones from the "autoexec.cfg" file
   - Extras
