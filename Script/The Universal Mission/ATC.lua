@@ -20,6 +20,13 @@ do
         end
     end
 
+    local function getTemperatureCelsiusAndFarenheit(temperature, inKelvins)
+        inKelvins = inKelvins or false
+        if inKelvins then temperature = temperature - 273.15 end
+
+        return tostring(math.floor(temperature)).."°C/"..tostring(math.floor(DCSEx.converter.celsiusToFahrenheit(temperature))).."°F"
+    end
+
     function TUM.atc.requestNavAssistanceToObjective(index, delayRadioAnswer)
         local obj = TUM.objectives.getObjective(index)
         if not obj then return end
@@ -118,18 +125,23 @@ do
     end
 
     function TUM.atc.requestWeatherUpdate(delayRadioAnswer)
-        local weatherInfo = "- It is currenly "..DCSEx.string.getTimeString()
+        local commonWeatherInfo = "- It is currenly "..DCSEx.string.getTimeString()
         if Library.environment.isItNightTime() then
-            weatherInfo = weatherInfo.." (night, sunrise at "..DCSEx.string.getTimeString(Library.environment.getDayTime(nil, false))..")\n"
+            commonWeatherInfo = commonWeatherInfo.." (night, sunrise at "..DCSEx.string.getTimeString(Library.environment.getDayTime(nil, false))..")\n"
         else
-            weatherInfo = weatherInfo.." (day, sunset at "..DCSEx.string.getTimeString(Library.environment.getDayTime(nil, true))..")\n"
+            commonWeatherInfo = commonWeatherInfo.." (day, sunset at "..DCSEx.string.getTimeString(Library.environment.getDayTime(nil, true))..")\n"
         end
-
-        weatherInfo = weatherInfo.."- Average windspeed is "..tostring(DCSEx.floor(Library.environment.getWindAverage())).."m/s\n"
 
         local players = coalition.getPlayers(TUM.settings.getPlayerCoalition())
         for _,p in ipairs(players) do
-            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(p), "atcWeatherUpdate", { weatherInfo }, "Control", delayRadioAnswer)
+            local lTemperature, _ = atmosphere.getTemperatureAndPressure(p:getPoint())
+
+            local localWeatherInfo = "- Average windspeed is "..tostring(math.floor(Library.environment.getWindAverage())).."m/s\n"
+            localWeatherInfo = localWeatherInfo.."- Windspeed at your location is "..DCSEx.math.getLength3D(atmosphere.getWind(p:getPoint())).."m/s\n"
+            localWeatherInfo = localWeatherInfo.."- Average ground-level temperature is "..getTemperatureCelsiusAndFarenheit(env.mission.weather.season.temperature).."\n"
+            localWeatherInfo = localWeatherInfo.."- Temperature at your location is "..getTemperatureCelsiusAndFarenheit(lTemperature, true)
+
+            TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(p), "atcWeatherUpdate", { commonWeatherInfo..localWeatherInfo }, "Control", delayRadioAnswer)
         end
     end
 end

@@ -30,7 +30,7 @@ do
 
     local function doCommandWeatherUpdate()
         TUM.radio.playForCoalition(TUM.settings.getPlayerCoalition(), "playerATCWeatherUpdate", nil, TUM.mission.getPlayerCallsign(), false)
-        TUM.atc.requestWeatherUpdate(false)
+        TUM.atc.requestWeatherUpdate(true)
     end
 
     function TUM.missionMenu.create()
@@ -38,9 +38,9 @@ do
         missionCommands.addCommand("☱ Mission status", rootMenu, doCommandMissionStatus, nil)
 
         local objectivesMenuRoot = missionCommands.addSubMenu("❖ Objectives", rootMenu)
+
         local navigationMenuRoot = missionCommands.addSubMenu("➽ Navigation", rootMenu)
         missionCommands.addCommand("Nav to nearest airbase", navigationMenuRoot, doCommandNearestAirbase, nil)
-
         for i=1,TUM.objectives.getCount() do
             local obj = TUM.objectives.getObjective(i)
             if obj then
@@ -51,7 +51,7 @@ do
                 missionCommands.addCommand("Nav to objective "..objNameAndDescription, navigationMenuRoot, doCommandObjectiveLocation, i)
             end
         end
-        -- missionCommands.addCommand("Weather update", navigationMenuRoot, doCommandWeatherUpdate, nil)
+        missionCommands.addCommand("Weather update", navigationMenuRoot, doCommandWeatherUpdate, nil)
 
         TUM.wingmenMenu.create()
         TUM.supportAWACS.createMenu()

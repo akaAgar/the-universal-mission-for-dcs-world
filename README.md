@@ -88,9 +88,9 @@ Please also note that PvP is not supported at the moment and that the mission wi
 - Extras
   - [x] First draft of the PDF manual
 - New features
-  - [ ] Additional commands in the "navigation" menu
-    - [ ] Vector to nearest airfield
-    - [ ] Weather report
+  - [x] Additional commands in the "navigation" menu
+    - [x] Vector to nearest airfield
+    - [x] Weather report
   - [ ] Administrative settings
   - [x] Use of "Client" slot instead of "Player" slot even in single-player missions, allowing the player to respawn on death/ejection instead of having to start the whole mission again
   - [x] Mission now autostarts (if it wasn't started yet) when all players have taken off

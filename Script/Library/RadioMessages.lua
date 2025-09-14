@@ -210,10 +210,10 @@ Library.radioMessages = {
         "No friendly airbase is available at the moment.",
     },
     atcWeatherUpdate = { -- TODO: voiceover
-        "Roger. Weather info coming up now.\n$1",
-        "Copy. Weather report inbound.\n$1",
-        "This is control, checking conditions now.\n$1",
-        "Copy. Weather data on the way.\n$1"
+        "Roger. Weather info coming up now.\n\n$1",
+        "Copy. Weather report inbound.\n\n$1",
+        "This is control, checking conditions now.\n\n$1",
+        "Copy. Weather data on the way.\n\n$1"
     },
     atcSafeLanding = { "Be advised: $1 is wheels down at $2 and clear of runway.", "All aircraft, $1 has landed at $2 and vacated active. Runway is open for next inbound.", "Traffic, $1 is on deck at $2 and heading to parking. Runway clear.", "All flights, $1 just rolled out at $2 and cleared the active.", "Heads up, $1 landed at $2 and moving to the ramp. Runway available for next approach." },
     atcSafeLandingPlayer = { "$1, wheels on deck, welcome back. You may taxi to the parking area.", "$1, good copy on landing. Exit when able, proceed to the parking area.", "$1, touchdown confirmed. Continue to parking.", "$1, welcome home. Clear of runway and taxi to parking area.", "$1, nice landing. Taxi to parking when ready." },
@@ -332,7 +332,6 @@ Library.radioMessages = {
         "Command, need an update on situation, what's the status?",
         "Command, mission timeline check, are we on schedule?"
     },
-
 
     playerCommandRequireObjectives = {
         "Command, request objective $1 coordinates, over.",
