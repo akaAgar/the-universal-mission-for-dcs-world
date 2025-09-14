@@ -85,6 +85,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
 - Bug fixes
   - [ ] AWACS datalinked contacts not showing on SA pages
   - [x] Some player callsigns causing a script error at startup
+  - [x] Fixed wrong filename in "enemy infantry killed" messages
 - Extras
   - [x] First draft of the PDF manual
 - New features
