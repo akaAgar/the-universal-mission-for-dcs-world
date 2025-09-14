@@ -7,6 +7,7 @@
 -- DCSEx.math.getBearing(point, refPoint, returnAsNESWstring)
 -- DCSEx.math.getDistance2D(vec2a, vec2b)
 -- DCSEx.math.getDistance3D(vec3a, vec3b)
+-- DCSEx.math.getLength3D(vec3)
 -- DCSEx.math.getRelativeHeading(point, refObject, format)
 -- DCSEx.math.getVec2FromAngle(angle)
 -- DCSEx.math.isPointInsideCircle(center, radius, vec2)
@@ -117,6 +118,16 @@ function DCSEx.math.getDistance3D(vec3a, vec3b)
     vec3b = vec3b or { x = 0, y = 0, z = 0 }
 
     return math.sqrt((vec3a.x - vec3b.x) ^ 2 + (vec3a.y - vec3b.y) ^ 2 + (vec3a.z - vec3b.z) ^ 2)
+end
+
+-------------------------------------
+-- Returns the length of a 3D vector
+-------------------------------------
+-- @param vec3 A 3D vector
+-- @return Length of the vector
+-------------------------------------
+function DCSEx.math.getLength3D(vec3)
+    return math.sqrt(vec3.x ^ 2 + vec3.y ^ 2 + vec3.z ^ 2)
 end
 
 -------------------------------------
