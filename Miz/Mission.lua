@@ -95,7 +95,7 @@ mission =
 		},
 	},
 	["pictureFileNameN"] = {},
-	["descriptionNeutralsTask"] = "DictKey_descriptionNeutralsTask_4",
+	["descriptionNeutralsTask"] = "",
 	["pictureFileNameServer"] = {},
 	["weather"] =
 	{
