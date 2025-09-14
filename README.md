@@ -1,6 +1,6 @@
 # The Universal Mission for DCS World
 
-**Current version: open beta 0.2.250729** (see the "version history" section at the end of this file for a list of the latest changes)
+**Current version: open beta 0.3.250914** (see the "version history" section at the end of this file for a list of the latest changes)
 
 **This is a BETA version, there may be bugs and there WILL be unbalanced stuff.**
 
@@ -72,34 +72,24 @@ Please also note that PvP is not supported at the moment and that the mission wi
 
 ## Planned development
 
-<h3>Planned for next version (could be subject to change)</h3>
+<h3>Planned for next version (can be subject to change)</h3>
 
 - Additional content
-  - [x] Added new units (Currenthill unit pack) from DCS 2.9.19.13478
-  - [x] Support for "Cold War Germany" theater
-- AI improvements
-  - [ ] AI wingmen should engage tracking radars first when told to engage SAM sites, in order to disable the site ASAP
+  - [ ] More objectives types
 - Balance improvements
-  - [x] Enemy CAP respawn rate now decreases the more enemy planes are shot
   - [ ] Tweaked XP requirements for medals/promotions
 - Bug fixes
   - [ ] AWACS datalinked contacts not showing on SA pages
-  - [x] Some player callsigns causing a script error at startup
-  - [x] Fixed wrong filename in "enemy infantry killed" messages
 - Extras
-  - [x] First draft of the PDF manual
+  - [ ] GitHub page
+- Improvements
+  - [ ] Better weather reports (cloud cover, rain, etc)
 - New features
-  - [x] Additional commands in the "navigation" menu
-    - [x] Vector to nearest airfield
-    - [x] Weather report
-  - [ ] Administrative settings
-  - [x] Use of "Client" slot instead of "Player" slot even in single-player missions, allowing the player to respawn on death/ejection instead of having to start the whole mission again
-  - [x] Mission now autostarts (if it wasn't started yet) when all players have taken off
+  - [ ] Administrative settings menu
+  - [ ] Friendly air defenses
 - Quality of life/minor tweaks
   - [ ] AI wingmen "Two was shot down!" call when witnessing another wingman killed
   - [ ] AI wingmen "Winchester!" call when out of ammo
-  - [x] Increased AWACS aircraft spawn altitude
-  - [x] Target coordinates radio message displayed for a longer time so players have the time to write them down or enter them in their flight computer
 
 ### High priority
 
@@ -107,12 +97,9 @@ Please also note that PvP is not supported at the moment and that the mission wi
   - More "flavor" radio messages ("fence in" when player approaches the AO, etc) so the world will feel more alive
 - Better balancing of the player career awards and promotions
 - Better use of context for "ambient" radio messages (should only warn of a SAM launch if an AI pilot is there to witness it, etc)
-- Friendly air defenses
-- GitHub page
 - Improved score multiplier taking into account various aspects of mission difficulty (weather, nighttime ops...)
 - Laser designation of targets by JTAC
 - New objectives: helicopter (drop/pickup units...), CAP, CAS, OCA (airbase attack)
-- PDF manual
 - Support for all missing DCS World theaters
 - Support for more factions and five different time periods (World War 2, Korea war, Vietnam war, late Cold war, Modern)
 
@@ -168,6 +155,29 @@ The core script is quite simple and small, I probably won't need too much help w
 
 ## Version history
 
+- **0.3.250914** (09/14/2025)
+  - **MAJOR CHANGE:**
+    - Use of "Client" slot instead of "Player" slot even in single-player missions, allowing the player to respawn on death/ejection instead of having to start the whole mission again
+    - "Player" should not be used anymore. Single-player missions must use a single "Client" slot instead
+  - Additional content
+    - Added new units (Currenthill unit pack) from DCS 2.9.19.13478
+    - Support for "Cold War Germany" theater
+  - Balance improvements
+    - Enemy CAP respawn rate now decreases the more enemy planes are shot
+  - Bug fixes
+    - Some player callsigns causing a script error at startup
+    - Fixed wrong filename in "enemy infantry killed" messages
+    - Removed unused zones from the "autoexec.cfg" file
+  - Extras
+    - First draft of the PDF manual
+  - New features
+    - Additional commands in the "navigation" menu
+      - Vector to nearest airfield
+      - Weather report
+    - Mission now autostarts (if it wasn't started yet) when all players have taken off
+  - Quality of life/minor tweaks
+    - Increased AWACS aircraft spawn altitude
+    - Target coordinates radio message displayed for a longer time so players have the time to write them down or enter them in their flight computer
 - **0.2.250729** (07/29/2025)
   - **MAJOR CHANGE:** Added all new wingman system
     - Far for perfect but a lot better than DCS's default wingmen

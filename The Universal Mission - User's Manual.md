@@ -5,7 +5,7 @@
 User's manual
 </p>
 <p class="heavy">
-The Universal Mission v0.2.250729<br />
+The Universal Mission v0.3.250914<br />
 Created and maintained by Ambroise Garel (<a href='mailto:akaagarmail@gmail.com'>akaagarmail@gmail.com</a>)
 </p>
 <p class="heavy">
@@ -46,7 +46,7 @@ I hope you'll like it.
 - Can generate any kind of mission: ground attack, interception, strike, airbase attack, CAS, CAP, and more
 - Completely dynamic, no two missions are ever the same
 - Entirely self-contained inside a .miz file, no need for any external program
-- More than 300 voiced radio messages for immersive and realistic coms
+- More than 325 voiced radio messages for immersive and realistic coms
 - Supports both single-player and small-scale PvE on closed servers
 - Persistent single player career mode, with awards and promotions. Dying won't reset your progress, but you have to come back to base alive for your kills and completed objectives to be saved to your profile, so watch out for SAMs on your way home
 - All new AI wingman system, smarter and more immersive than DCS's original wingmen
@@ -145,7 +145,9 @@ The exact content of the menu will depend on the current phase of the mission.
 - **Objectives**: Displays a list of special commands related to each of the mission's objectives. Be aware that some objectives may have no special commands associated with them.
   - **Smoke marker on target**: Asks for a friendly JTAC to pop a smoke marker on the target. Makes finding the target easier, but will cost you a small XP penalty. Only available for missions where a JTAC is available (it's pretty hard to throw a smoke grenade at an airplane or a ship in the middle of the sea).
 - **Navigation**: Displays a list of commands related to navigational assistance.
+  - **Navigation to nearest airbase**: Displays the coordinates of the nearest friendly airbase, its BRA ("fly X for Y") relative to the player's position and an estimated flight time and ETA.
   - **Navigation to objective [OBJECTIVE NAME]**: Displays the coordinates of the objective, its BRA ("fly X for Y") relative to the player's position and an estimated flight time and ETA. Some objectives types (e.g. strike missions) are provided with exact coordinates, but most will only have approximate coordiantes, so you'll have to search for targets yourself once in the objective area.
+  - **Weather update**: Displays information about the weather (wind speed, temperature...) at the player location.
 - **Flight**: Displays a list of commands for your wingmen. Only shown in single-player missions and if wingmen are available for this mission.
   - **Cover me!**: Tasks your wingmen to immediately engage any nearby air threats.
   - **Engage**: Tasks your wingmen to engage a certain type of targets. Targets must be detected by your wingmen (see "Report contacts" below), or they won't be able to engage them.
@@ -174,7 +176,7 @@ The Universal Mission is designed to be easily editable to suit your preferences
 - Move it to another airbase, change its coalition (make sure blue players are spawned on an airbase located in a BLUFOR zone are red players are spawned on an airbase located in a REDFOR zone)
   - You may also add an aircraft carrier or a FARP for the player to take off from
 - Change its default loadout if you plan to play a specific kind of mission and don't want to lose time asking the ground crew to rearm your aircraft (e.g. if you know you want to play SEAD missions, you may as well stock up on AGM-88s)
-- Change the skill level from "Player" to "Client" and add other aircraft to create a multiplayer mission to play with your friends. Keep in mind that the persistent career/player stats system will be disabled in multiplayer missions and that all player aircraft must belong to the same coalition (TUM does not support PvP)
+- Add other aircraft to create a multiplayer mission to play with your friends. Keep in mind that the persistent career/player stats system will be disabled in multiplayer missions and that all player aircraft must belong to the same coalition (TUM does not support PvP)
 
 <h3>Zones</h3>
 
