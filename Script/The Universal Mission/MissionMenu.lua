@@ -17,7 +17,7 @@ do
 
     local function doCommandNearestAirbase()
         TUM.radio.playForCoalition(TUM.settings.getPlayerCoalition(), "playerATCRequireNearestAirbase", nil, TUM.mission.getPlayerCallsign(), false)
-        TUM.atc.requestNavAssistanceToAirbase(false)
+        TUM.atc.requestNavAssistanceToAirbase(true)
     end
 
     local function doCommandObjectiveLocation(index)
@@ -39,7 +39,7 @@ do
 
         local objectivesMenuRoot = missionCommands.addSubMenu("❖ Objectives", rootMenu)
         local navigationMenuRoot = missionCommands.addSubMenu("➽ Navigation", rootMenu)
-        -- missionCommands.addCommand("Nav to nearest airbase", navigationMenuRoot, doCommandNearestAirbase, nil)
+        missionCommands.addCommand("Nav to nearest airbase", navigationMenuRoot, doCommandNearestAirbase, nil)
 
         for i=1,TUM.objectives.getCount() do
             local obj = TUM.objectives.getObjective(i)

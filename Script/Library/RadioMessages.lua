@@ -202,9 +202,9 @@ Library.radioMessages = {
     },
 
     atcRequireNearestAirbase = { -- TODO: voiceover
-        "Roger. Vectoring you to the nearest airbase.\n$1",
-        "Copy. Coordinates to nearest field inbound.\n$1",
-        "Roger. Guide you direct to the nearest recovery airfield.\n$1"
+        "Roger. Vectoring you to the nearest airbase.\n\n$1",
+        "Copy. Coordinates to nearest field inbound.\n\n$1",
+        "Roger. Guide you direct to the nearest recovery airfield.\n\n$1"
     },
     atcRequireNearestAirbaseNone = { -- TODO: voiceover
         "No friendly airbase is available at the moment.",
