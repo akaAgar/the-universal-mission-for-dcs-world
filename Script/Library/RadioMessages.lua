@@ -206,6 +206,9 @@ Library.radioMessages = {
         "Copy. Coordinates to nearest field inbound.\n$1",
         "Roger. Guide you direct to the nearest recovery airfield.\n$1"
     },
+    atcRequireNearestAirbaseNone = { -- TODO: voiceover
+        "No friendly airbase is available at the moment.",
+    },
     atcWeatherUpdate = { -- TODO: voiceover
         "Roger. Weather info coming up now.\n$1",
         "Copy. Weather report inbound.\n$1",
