@@ -26,7 +26,7 @@ The Universal Mission for DCS World is a fully dynamic single-player/PvE mission
 
 **Please read the "planned development" section below for more information.**
 
-- The current version supports only modern (post-Cold War) units and Caucasus, Kola, Marianas, Persian Gulf and Syria theaters
+- The current version supports only modern (post-Cold War) units and Caucasus, Germany, Kola, Marianas, Persian Gulf and Syria theaters
 - Not all mission types are supported yet
 - Career progress may be lost because of future updates, don't get too attached to it
 
@@ -156,13 +156,13 @@ The core script is quite simple and small, I probably won't need too much help w
 
 - **0.3.250914** (09/14/2025)
   - **MAJOR CHANGE:**
-    - Use of "Client" slot instead of "Player" slot even in single-player missions, allowing the player to respawn on death/ejection instead of having to start the whole mission again
-    - "Player" should not be used anymore. Single-player missions must use a single "Client" slot instead
+    - Use of "Client" slots instead of "Player" slots even in single-player missions, allowing the player to respawn on death/ejection instead of having to start the whole mission again
+    - "Player" slots should not be used anymore. Single-player missions must now use a single "Client" slot instead
   - Additional content
     - Added new units (Currenthill unit pack) from DCS 2.9.19.13478
     - Support for "Cold War Germany" theater
   - Balance improvements
-    - Enemy CAP respawn rate now decreases the more enemy planes are shot
+    - Enemy CAP respawn rate now decreases as more enemy planes are shot down
   - Bug fixes
     - Some player callsigns were causing a script error at startup
     - Fixed wrong filename in "enemy infantry killed" messages
@@ -176,7 +176,7 @@ The core script is quite simple and small, I probably won't need too much help w
     - Mission now autostarts (if it wasn't started yet) when all players have taken off
   - Quality of life/minor tweaks
     - Increased AWACS aircraft spawn altitude
-    - Target coordinates radio message displayed for a longer time so players have the time to write them down or enter them in their flight computer
+    - Target coordinates radio message displayed for a longer time so players have time to write them down or enter them in their flight computer
 - **0.2.250729** (07/29/2025)
   - **MAJOR CHANGE:** Added all new wingman system
     - Far for perfect but a lot better than DCS's default wingmen
