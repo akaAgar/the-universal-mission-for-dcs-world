@@ -53,6 +53,7 @@ do
 
         local spawnPoint2 = nil
         local spawnPoint3 = nil
+        local isAirbaseTarget = false
         local isSceneryTarget = false
 
         if DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.SCENERY_TARGET) then
@@ -66,6 +67,21 @@ do
             spawnPoint3 = DCSEx.table.deepCopy(pickedScenery:getPoint())
             spawnPoint2 = DCSEx.math.vec3ToVec2(spawnPoint3)
             isSceneryTarget = true
+        elseif DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.AIRBASE_TARGET) then
+            local validAirbases = {}
+            for _,ab in ipairs(coalition.getAirbases(TUM.settings.getEnemyCoalition())) do
+                if DCSEx.zones.isPointInside(zone, ab:getPoint()) then
+                    table.insert(validAirbases, ab)
+                end
+            end
+            if #validAirbases == 0 then
+                TUM.log("Failed to find a valid airbase to use as target.", TUM.logger.logLevel.WARNING)
+                return nil
+            end
+            local pickedAirbase = DCSEx.table.getRandom(validAirbases)
+            spawnPoint3 = DCSEx.table.deepCopy(pickedAirbase:getPoint())
+            spawnPoint2 = DCSEx.math.vec3ToVec2(spawnPoint3)
+            isAirbaseTarget = true
         elseif objectiveDB.surfaceType == land.SurfaceType.WATER then
             spawnPoint2 = pickWaterPoint(zone)
             if not spawnPoint2 then
@@ -89,6 +105,7 @@ do
         local objective = {
             completed = false,
             completedUnitsID = {},
+            isAirbaseTarget = isAirbaseTarget,
             isSceneryTarget = isSceneryTarget,
             markerID = DCSEx.world.getNextMarkerID(),
             markerTextID = DCSEx.world.getNextMarkerID(),
@@ -108,7 +125,7 @@ do
             objective.waypoint3 = DCSEx.math.vec2ToVec3(objective.waypoint2, "land")
         end
 
-        if not DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.SCENERY_TARGET) then
+        if not isAirbaseTarget and not isSceneryTarget then
             -- Check group options
             local groupOptions = {}
             if DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.MOVING) then

@@ -60,7 +60,7 @@ do
             return
         end
 
-        if obj.isSceneryTarget then
+        if obj.isAirbaseTarget or obj.isSceneryTarget then
             TUM.radio.playForCoalition(TUM.settings.getPlayerCoalition(), "jtacSmokeOK", { jtacName[index], smokeColorName }, jtacName[index], true, spawnSmoke, { point3 = obj.point3, smokeColor = smokeColor })
         else
             for _,id in ipairs(obj.unitsID) do

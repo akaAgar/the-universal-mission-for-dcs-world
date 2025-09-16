@@ -174,7 +174,13 @@ do
         if event.id ~= world.event.S_EVENT_DEAD and event.id ~= world.event.S_EVENT_UNIT_LOST then return end
         if not event.initiator then return end
 
-        if objectives[index].isSceneryTarget then
+        if objectives[index].isAirbaseTarget then
+            if Object.getCategory(event.initiator) == Object.Category.BASE then
+                if DCSEx.math.isSamePoint(event.initiator:getPoint(), objectives[index].point3) then
+                    timer.scheduleFunction(markObjectiveAsComplete, index, timer.getTime() + 3)
+                end
+            end
+        elseif objectives[index].isSceneryTarget then
             if Object.getCategory(event.initiator) == Object.Category.SCENERY then
                 if DCSEx.math.isSamePoint(event.initiator:getPoint(), objectives[index].point3) then
                     timer.scheduleFunction(markObjectiveAsComplete, index, timer.getTime() + 3)
