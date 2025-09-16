@@ -28,6 +28,8 @@ do
         "Whiplash",
     }
 
+    local LASER_CODE = 1688
+    local LASER_DESIGNATION_PENALTY = -15
     local SMOKE_DURATION = 300 -- in seconds
     local SMOKE_MARKER_PENALTY = -25
 
@@ -36,6 +38,14 @@ do
 
     local function spawnSmoke(args)
         trigger.action.smoke(args.point3, args.smokeColor)
+    end
+
+    local function doCommandLaser(index)
+        -- TODO
+    end
+
+    local function doCommandLaserStop(index)
+        -- TODO
     end
 
     local function doCommandSmoke(index)
@@ -89,5 +99,7 @@ do
         if not DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.ALLOW_JTAC) then return end -- No JTAC for this objective
 
         missionCommands.addCommand("Smoke marker on target ("..tostring(SMOKE_MARKER_PENALTY).."xp)", menuRoot, doCommandSmoke, index)
+        missionCommands.addCommand("Designate target with laser (code "..tostring(LASER_CODE)..", "..tostring(LASER_DESIGNATION_PENALTY).."xp)", menuRoot, doCommandLaser, index)
+        missionCommands.addCommand("Stop designating target with laser", menuRoot, doCommandLaserStop, index)
     end
 end
