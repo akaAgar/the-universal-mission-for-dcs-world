@@ -81,6 +81,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
   - [ ] Tweaked XP requirements for medals/promotions
 - Bug fixes
   - [ ] AWACS datalinked contacts not showing on SA pages
+  - [X] AWACS can now detect enemy helicopters
 - Extras
   - [ ] GitHub page
 - Improvements
