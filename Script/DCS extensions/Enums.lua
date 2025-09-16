@@ -54,11 +54,13 @@ DCSEx.enums.taskFamily = {
 -- Special events for tasks
 -------------------------------------
 DCSEx.enums.taskFlag = {
-    ALLOW_JTAC = 1,
-    DESTROY_TRACK_RADARS_ONLY = 2,
-    MOVING = 3,
-    ON_ROADS = 4,
-    SCENERY_TARGET = 5
+    AIRBASE_TARGET = 1,
+    ALLOW_JTAC = 2,
+    DESTROY_TRACK_RADARS_ONLY = 3,
+    MOVING = 4,
+    ON_ROADS = 5,
+    PARKED_AIRCRAFT_TARGET = 6,
+    SCENERY_TARGET = 7,
 }
 
 -------------------------------------
