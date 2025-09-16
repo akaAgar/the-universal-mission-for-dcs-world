@@ -3,9 +3,12 @@ Library.tasks.ocaFighterStrike = {
    description =
    {
       briefing = {
-         "",
+         "Destroying enemy fighters on the ramp will prevent immediate sortie generation and blunt their ability to provide CAS against our advancing forces.",
+         "A ramp strike against enemy aircraft will pre-empt an imminent scramble warning we have intel for, preventing a coordinated mass launch.",
+         "Removing enemy fighters on the ramp will degrade enemy air superiority over the battlespace and protects our medevac and resupply corridors.",
+         "Priority is to eliminate immediate airborne threats on the ramp to safeguard coalition force freedom of maneuver.",
       },
-      short = "Destroy enemy bomber on the ramp",
+      short = "Destroy enemy fighter on the ramp",
    },
    conditions = {
       difficultyMinimum = 0,
