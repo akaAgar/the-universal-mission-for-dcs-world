@@ -32,7 +32,7 @@ do
     end
 
 
-    -- Called when a unit is destroyed
+    -- Called when an unit is destroyed
     local function onEventDead(event)
         if not event.initiator then return end -- Nothing was hit
 
@@ -53,6 +53,17 @@ do
         )
     end
 
+    -- Called when an unit takes damage
+    local function onEventHit(event)
+        if not event.initiator then return end -- Nothing was hit
+        if Object.getCategory(event.initiator) ~= Object.Category.UNIT then return end -- Target wasn't an unit
+        if event.initiator:getCoalition() ~= TUM.settings.getEnemyCoalition() then return end -- Unit is not an enemy
+        if event.initiator:getDesc().category ~= Unit.Category.AIRPLANE and event.initiator:getDesc().category ~= Unit.Category.HELICOPTER then return end -- Wasn't an aircraft
+        if event.initiator:inAir() then return end -- Unit is currently in air
+
+        trigger.action.explosion(event.initiator:getPoint(), 100) -- Detonate the parked aircraft, to make it easier to kill
+    end
+
     function TUM.ambientWorld.removeAll()
         for _,id in ipairs(groupIDs) do
             DCSEx.world.destroyGroupByID(id)
@@ -70,6 +81,8 @@ do
 
         if event.id == world.event.S_EVENT_DEAD then
             onEventDead(event)
+        elseif event.id == world.event.S_EVENT_HIT then
+            onEventHit(event)
         end
     end
 end
