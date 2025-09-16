@@ -1,4 +1,4 @@
-Library.tasks.ocaFighterStrike = {
+Library.tasks.ocaBomberStrike = {
    taskFamily = DCSEx.enums.taskFamily.OCA,
    description =
    {
