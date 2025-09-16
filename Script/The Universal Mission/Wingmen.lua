@@ -23,11 +23,11 @@ do
         elseif taskingID == DCSEx.enums.taskFamily.GROUND_ATTACK then
             return "attack"
         -- elseif taskingID == DCSEx.enums.taskFamily.HELICOPTER then
-        -- elseif taskingID == DCSEx.enums.taskFamily.HELO_HUN then
+        elseif taskingID == DCSEx.enums.taskFamily.HELO_HUNT then
         elseif taskingID == DCSEx.enums.taskFamily.INTERCEPTION then
             return "cap"
-        -- elseif taskingID == DCSEx.enums.taskFamily.OCA then
         elseif taskingID == DCSEx.enums.taskFamily.SEAD then
+        -- elseif taskingID == DCSEx.enums.taskFamily.OCA then
             return "sead"
         -- elseif taskingID == DCSEx.enums.taskFamily.STRIKE then
         --     return "strike"
