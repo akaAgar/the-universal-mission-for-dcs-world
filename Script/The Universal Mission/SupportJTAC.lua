@@ -1,6 +1,13 @@
 -- ====================================================================================
 -- TUM.SUPPORTJTAC - HANDLES FRIENDLY JTAC SMOKE MARKERS AND LASING
 -- ====================================================================================
+-- (local) destroyAllLasers()
+-- (local) doCommandLaser(index)
+-- (local) doCommandLaserStop(index)
+-- (local) doCommandSmoke(index)
+-- (local) spawnSmoke(args)
+-- (local) updateLaserPositions()
+-- TUM.supportJTAC.setupJTACOnObjective(index, menuRoot)
 -- ====================================================================================
 
 TUM.supportJTAC = {}
@@ -35,17 +42,50 @@ do
 
     local jtacName = {}
     local lastSmoke = {}
+    local laserSpots = {}
+    local laserTargets = {}
 
-    local function spawnSmoke(args)
-        trigger.action.smoke(args.point3, args.smokeColor)
+    local function destroyAllLasers()
+        if #laserSpots == 0 and #laserTargets == 0 then return end
+
+        for _,l in pairs(laserSpots) do
+            if l then l:destroy() end
+        end
+
+        laserSpots = {}
+        laserTargets = {}
     end
 
     local function doCommandLaser(index)
-        -- TODO
+        local obj = TUM.objectives.getObjective(index)
+        if not obj then return end
+
+        if laserSpots[index] then
+            laserSpots[index]:destroy()
+            laserSpots[index] = nil
+        end
+
+        local sourceObject = nil
+        local targetPoint = {x = 0, y = 0, z = 0}
+
+        laserSpots[index] = Spot.createLaser(sourceObject, {x = 0, y = 1, z = 0}, targetPoint, LASER_CODE)
     end
 
     local function doCommandLaserStop(index)
-        -- TODO
+        local obj = TUM.objectives.getObjective(index)
+        if not obj then return end
+
+        TUM.radio.playForCoalition(TUM.settings.getPlayerCoalition(), "playerJTACLaserStop", { jtacName[index], obj.name }, TUM.mission.getPlayerCallsign(), false)
+
+        -- Not lasing this objective at the moment
+        if not laserSpots[index] then
+            TUM.radio.playForCoalition(TUM.settings.getPlayerCoalition(), "jtacLaserStopNoLaser", { jtacName[index], obj.name }, jtacName[index], true)
+            return
+        end
+
+        laserSpots[index]:destroy()
+        laserSpots[index] = nil
+        TUM.radio.playForCoalition(TUM.settings.getPlayerCoalition(), "jtacLaserStop", { jtacName[index], obj.name }, jtacName[index], true)
     end
 
     local function doCommandSmoke(index)
@@ -89,6 +129,24 @@ do
         TUM.radio.playForCoalition(TUM.settings.getPlayerCoalition(), "jtacSmokeNoTarget", { jtacName[index] }, jtacName[index], true)
     end
 
+    local function spawnSmoke(args)
+        trigger.action.smoke(args.point3, args.smokeColor)
+    end
+
+    local function updateLaserPositions()
+        -- Not in a mission? Destroy all lasers
+        if TUM.mission.getStatus() == TUM.mission.status.NONE then
+            destroyAllLasers()
+            return timer.getTime() + 0.5
+        end
+
+        for i=1,TUM.objectives.getCount() do
+            -- TODO
+        end
+
+        return timer.getTime() + 0.5
+    end
+
     function TUM.supportJTAC.setupJTACOnObjective(index, menuRoot)
         local obj = TUM.objectives.getObjective(index)
         if not obj then return end
@@ -102,4 +160,7 @@ do
         missionCommands.addCommand("Designate target with laser (code "..tostring(LASER_CODE)..", "..tostring(LASER_DESIGNATION_PENALTY).."xp)", menuRoot, doCommandLaser, index)
         missionCommands.addCommand("Stop designating target with laser", menuRoot, doCommandLaserStop, index)
     end
+
+    -- Schedule the laser updating function to be called every 0.5 seconds 
+    timer.scheduleFunction(updateLaserPositions, {}, timer.getTime() + 0.5)
 end
