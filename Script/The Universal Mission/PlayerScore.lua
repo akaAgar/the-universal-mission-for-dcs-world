@@ -68,8 +68,8 @@ do
         if objectDesc.attributes["Planes"] then return math.floor(25 * groundMultiplier) end
 
         -- Rotary wing
-        if objectDesc.attributes["Attack helicopters"] then return math.floor(30 * groundMultiplier) end
-        if objectDesc.attributes["Helicopters"] then return math.floor(25 * groundMultiplier) end
+        if objectDesc.attributes["Attack helicopters"] then return math.floor(25 * groundMultiplier) end
+        if objectDesc.attributes["Helicopters"] then return math.floor(15 * groundMultiplier) end
 
         -- Default air
         if objectDesc.attributes["Air"] then return math.floor(20 * groundMultiplier) end
