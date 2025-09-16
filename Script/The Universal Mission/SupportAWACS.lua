@@ -43,6 +43,15 @@ do
                 end
             end
         end
+        detectedGroups = coalition.getGroups(TUM.settings.getEnemyCoalition(), Group.Category.HELICOPTER)
+        for _,g in pairs(detectedGroups) do
+            local units = g:getUnits()
+            for _,u in pairs(units) do
+                if u:inAir() then
+                    table.insert(detectedAircraft, u)
+                end
+            end
+        end
 
         -- No aircraft on picture
         if #detectedAircraft == 0 then
