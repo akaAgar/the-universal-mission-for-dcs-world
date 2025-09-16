@@ -41,6 +41,20 @@ do
         return possiblePoints[1]
     end
 
+    local function getEnemyAirbaseInZone(zone)
+        local validAirbases = {}
+
+        for _,ab in ipairs(coalition.getAirbases(TUM.settings.getEnemyCoalition())) do
+            if DCSEx.zones.isPointInside(zone, ab:getPoint()) then
+                table.insert(validAirbases, ab)
+            end
+        end
+
+        if #validAirbases == 0 then return nil end
+
+        return DCSEx.table.getRandom(validAirbases)
+    end
+
     function TUM.objectivesMaker.create()
         local zone = DCSEx.zones.getByName(TUM.settings.getValue(TUM.settings.id.TARGET_LOCATION, true))
 
@@ -51,6 +65,7 @@ do
         end
         local objectiveDB = Library.tasks[taskID]
 
+        local parkingInfo = nil
         local spawnPoint2 = nil
         local spawnPoint3 = nil
         local isAirbaseTarget = false
@@ -68,20 +83,33 @@ do
             spawnPoint2 = DCSEx.math.vec3ToVec2(spawnPoint3)
             isSceneryTarget = true
         elseif DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.AIRBASE_TARGET) then
-            local validAirbases = {}
-            for _,ab in ipairs(coalition.getAirbases(TUM.settings.getEnemyCoalition())) do
-                if DCSEx.zones.isPointInside(zone, ab:getPoint()) then
-                    table.insert(validAirbases, ab)
-                end
-            end
-            if #validAirbases == 0 then
+            local pickedAirbase = getEnemyAirbaseInZone(zone)
+            if not pickedAirbase then
                 TUM.log("Failed to find a valid airbase to use as target.", TUM.logger.logLevel.WARNING)
                 return nil
             end
-            local pickedAirbase = DCSEx.table.getRandom(validAirbases)
             spawnPoint3 = DCSEx.table.deepCopy(pickedAirbase:getPoint())
             spawnPoint2 = DCSEx.math.vec3ToVec2(spawnPoint3)
             isAirbaseTarget = true
+        elseif DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.PARKED_AIRCRAFT_TARGET) then
+            local pickedAirbase = getEnemyAirbaseInZone(zone)
+            if not pickedAirbase then
+                TUM.log("Failed to find a valid airbase to use as target.", TUM.logger.logLevel.WARNING)
+                return nil
+            end
+            local parkings = pickedAirbase:getParking()
+            local validParkings = {}
+            for _,p in pairs(parkings) do
+                if p.Term_Type == 104 then table.insert(validParkings, p) end
+            end
+            if #validParkings == 0 then
+                TUM.log("Failed to find a valid airbase parking to spawn a target.", TUM.logger.logLevel.WARNING)
+                return nil
+            end
+            local pickedParking = DCSEx.table.getRandom(validParkings)
+            parkingInfo = { airbaseID = pickedAirbase:getID(), parkingID = pickedParking.Term_Index }
+            spawnPoint3 = pickedParking.vTerminalPos
+            spawnPoint2 = DCSEx.math.vec3ToVec2(spawnPoint3)
         elseif objectiveDB.surfaceType == land.SurfaceType.WATER then
             spawnPoint2 = pickWaterPoint(zone)
             if not spawnPoint2 then
@@ -110,6 +138,7 @@ do
             markerID = DCSEx.world.getNextMarkerID(),
             markerTextID = DCSEx.world.getNextMarkerID(),
             name = Library.objectiveNames.get():upper(),
+            parkingInfo = parkingInfo,
             point2 = DCSEx.table.deepCopy(spawnPoint2),
             point3 = DCSEx.table.deepCopy(spawnPoint3),
             preciseCoordinates = objectiveDB.waypointInaccuracy <= 0,
@@ -138,6 +167,12 @@ do
                     end
                     groupOptions.moveTo = destPoint
                 end
+            end
+
+            -- Parked aircraft only
+            if parkingInfo then
+                groupOptions.airbaseID = parkingInfo.airbaseID
+                groupOptions.parkingID = parkingInfo.parkingID
             end
 
             local units = Library.factions.getUnits(TUM.settings.getEnemyFaction(), objectiveDB.targetFamilies, math.random(objectiveDB.targetCount[1], objectiveDB.targetCount[2]))
