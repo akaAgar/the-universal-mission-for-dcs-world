@@ -52,7 +52,7 @@ do
         [TUM.settings.id.PLAYER_COALITION] = { "Red", "Blue" }, -- Must match values in the coalition.side enum
         [TUM.settings.id.TARGET_COUNT] = { "1", "2", "3", "4" },
         [TUM.settings.id.TARGET_LOCATION] = { },
-        [TUM.settings.id.TASKING] = { "Antiship strike", "Ground attack", "Interception", "OCA", "SEAD", "Strike" }, -- Must match values in the DCSEx.enums.taskFamily enum
+        [TUM.settings.id.TASKING] = { "Antiship strike", "Ground attack", "Helicopter hunt", "Interception", "OCA", "SEAD", "Strike" }, -- Must match values in the DCSEx.enums.taskFamily enum
         [TUM.settings.id.TIME_PERIOD] = { "World War 2", "Korea War", "Vietnam War", "Late Cold War", "Modern" }, -- Must match values in the DCSEx.enums.timePeriod enum
         [TUM.settings.id.WINGMEN] = { "None", "1", "2", "3" }
     }

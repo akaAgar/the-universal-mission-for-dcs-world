@@ -75,6 +75,8 @@ Please also note that PvP is not supported at the moment and that the mission wi
 
 - Additional content
   - [ ] More objectives types
+    - [x] Helicopter hunt
+    - [ ] Offensive counter-air
 - Balance improvements
   - [ ] Tweaked XP requirements for medals/promotions
 - Bug fixes
