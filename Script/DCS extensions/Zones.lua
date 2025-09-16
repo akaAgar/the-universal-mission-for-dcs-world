@@ -2,7 +2,7 @@
 -- DCSEX.ZONES - FUNCTIONS RELATED TO MAP TRIGGER ZONES
 -- ====================================================================================
 -- DCSEx.zones.drawOnMap(zoneTable, lineColor, fillColor, lineType, drawName, readOnly)
--- DCSEx.zones.getAirbases(zone, coalition)
+-- DCSEx.zones.getAirbases(zone, coalition, allowShips)
 -- DCSEx.zones.getAll()
 -- DCSEx.zones.getByName(name)
 -- DCSEx.zones.getCenter(zoneTable)
@@ -78,10 +78,12 @@ end
 -------------------------------------
 -- @param zoneTable Table of the zone in which to search
 -- @param coalition Coalition (from the coalition.side enum) the airbase must belong to. Default is nil, which means "all coalitions"
+-- @param allowShips Should ships be allowed?
 -- @return Table of airbases
 -------------------------------------
-function DCSEx.zones.getAirbases(zoneTable, coalition)
+function DCSEx.zones.getAirbases(zoneTable, coalition, allowShips)
     coalition = coalition or nil
+    allowShips = allowShips or false
 
     local coalitions = { coalition.side.RED, coalition.side.BLUE }
     if coalition then coalitions = { coalition } end
@@ -89,8 +91,19 @@ function DCSEx.zones.getAirbases(zoneTable, coalition)
     local validAirbases = {}
     for _,side in ipairs(coalitions) do
         for _,ab in ipairs(coalition.getAirbases(side)) do
-            if DCSEx.zones.isPointInside(zoneTable, ab:getPoint()) then
-                table.insert(validAirbases, ab)
+            local abDesc = ab:getDesc()
+            local isValid = true
+
+            if ab:getDesc().category == Airbase.Category.HELIPAD then
+                isValid = false
+            elseif ab:getDesc().category == Airbase.Category.SHIP and not allowShips then
+                isValid = false
+            end
+
+            if isValid then
+                if DCSEx.zones.isPointInside(zoneTable, ab:getPoint()) then
+                    table.insert(validAirbases, ab)
+                end
             end
         end
     end
