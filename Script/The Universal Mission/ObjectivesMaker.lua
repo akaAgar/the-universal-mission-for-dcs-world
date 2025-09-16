@@ -41,20 +41,6 @@ do
         return possiblePoints[1]
     end
 
-    local function getEnemyAirbaseInZone(zone)
-        local validAirbases = {}
-
-        for _,ab in ipairs(coalition.getAirbases(TUM.settings.getEnemyCoalition())) do
-            if DCSEx.zones.isPointInside(zone, ab:getPoint()) then
-                table.insert(validAirbases, ab)
-            end
-        end
-
-        if #validAirbases == 0 then return nil end
-
-        return DCSEx.table.getRandom(validAirbases)
-    end
-
     function TUM.objectivesMaker.create()
         local zone = DCSEx.zones.getByName(TUM.settings.getValue(TUM.settings.id.TARGET_LOCATION, true))
 
@@ -83,20 +69,22 @@ do
             spawnPoint2 = DCSEx.math.vec3ToVec2(spawnPoint3)
             isSceneryTarget = true
         elseif DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.AIRBASE_TARGET) then
-            local pickedAirbase = getEnemyAirbaseInZone(zone)
-            if not pickedAirbase then
+            local validAirbases = DCSEx.zones.getAirbases(zone, TUM.settings.getEnemyCoalition())
+            if #validAirbases == 0 then
                 TUM.log("Failed to find a valid airbase to use as target.", TUM.logger.logLevel.WARNING)
                 return nil
             end
+            local pickedAirbase = DCSEx.table.getRandom(validAirbases)
             spawnPoint3 = DCSEx.table.deepCopy(pickedAirbase:getPoint())
             spawnPoint2 = DCSEx.math.vec3ToVec2(spawnPoint3)
             isAirbaseTarget = true
         elseif DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.PARKED_AIRCRAFT_TARGET) then
-            local pickedAirbase = getEnemyAirbaseInZone(zone)
-            if not pickedAirbase then
+            local validAirbases = DCSEx.zones.getAirbases(zone, TUM.settings.getEnemyCoalition())
+            if #validAirbases == 0 then
                 TUM.log("Failed to find a valid airbase to use as target.", TUM.logger.logLevel.WARNING)
                 return nil
             end
+            local pickedAirbase = DCSEx.table.getRandom(validAirbases)
             local parkings = pickedAirbase:getParking()
             local validParkings = {}
             for _,p in pairs(parkings) do

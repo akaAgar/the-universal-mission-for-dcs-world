@@ -2,6 +2,7 @@
 -- DCSEX.ZONES - FUNCTIONS RELATED TO MAP TRIGGER ZONES
 -- ====================================================================================
 -- DCSEx.zones.drawOnMap(zoneTable, lineColor, fillColor, lineType, drawName, readOnly)
+-- DCSEx.zones.getAirbases(zone, coalition)
 -- DCSEx.zones.getAll()
 -- DCSEx.zones.getByName(name)
 -- DCSEx.zones.getCenter(zoneTable)
@@ -70,6 +71,30 @@ function DCSEx.zones.drawOnMap(zoneTable, lineColor, fillColor, lineType, drawNa
     end
 
     return markerID
+end
+
+-------------------------------------
+-- Returns all airbases in the zone
+-------------------------------------
+-- @param zoneTable Table of the zone in which to search
+-- @param coalition Coalition (from the coalition.side enum) the airbase must belong to. Default is nil, which means "all coalitions"
+-- @return Table of airbases
+-------------------------------------
+function DCSEx.zones.getAirbases(zoneTable, coalition)
+    coalition = coalition or nil
+
+    local coalitions = { coalition.side.RED, coalition.side.BLUE }
+    if coalition then coalitions = { coalition } end
+
+    local validAirbases = {}
+    for _,side in ipairs(coalitions) do
+        for _,ab in ipairs(coalition.getAirbases(side)) do
+            if DCSEx.zones.isPointInside(zoneTable, ab:getPoint()) then
+                table.insert(validAirbases, ab)
+            end
+        end
+    end
+    return validAirbases
 end
 
 -------------------------------------
