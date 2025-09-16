@@ -69,7 +69,16 @@ do
             end
         end
 
-        trigger.action.outText("Generating mission and loading assets, this can take some time...", 5)
+        -- If an OCA mission has been selected and the selected target zone doesn't contain any enemy airfield, default to ground attack
+        if TUM.settings.getValue(TUM.settings.id.TASKING) == DCSEx.enums.taskFamily.OCA then
+            local zone = DCSEx.zones.getByName(TUM.settings.getValue(TUM.settings.id.TARGET_LOCATION, true))
+            if #DCSEx.zones.getAirbases(zone, TUM.settings.getEnemyCoalition()) == 0 then
+                trigger.action.outText("OCA tasking selected in a zone without any enemy airfields, defaulting to GROUND ATTACK tasking.", 3)
+                TUM.settings.setValue(TUM.settings.id.TASKING, DCSEx.enums.taskFamily.GROUND_ATTACK, true)
+            end
+        end
+
+        trigger.action.outText("Generating mission and loading assets, this can take some time...", 3)
 
         -- Add a little delay for the "Generating mission..." message be printed out. Once generation begins, the main DCS thread will be to busy to output anything.
         timer.scheduleFunction(TUM.mission.beginMission, false, timer.getTime() + 1)
