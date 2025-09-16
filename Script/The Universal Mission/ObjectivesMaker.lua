@@ -160,6 +160,7 @@ do
             -- Parked aircraft only
             if parkingInfo then
                 groupOptions.airbaseID = parkingInfo.airbaseID
+                groupOptions.invisible = true -- Not ideal because wingmen can't be tasked with attacking targets, but only way I've found to prevent friendly CAP from attacking parked aircraft
                 groupOptions.parkingID = parkingInfo.parkingID
             end
 
