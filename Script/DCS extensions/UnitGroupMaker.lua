@@ -374,6 +374,14 @@ do
                 setAircraftTaskOrbit(groupTable, options)
             end
 
+            -- For parked aircraft
+            if options.airbaseID and options.parkingID then
+                groupTable.route.points[1].action = "From Parking Area"
+                groupTable.route.points[1].airdromeId = options.airbaseID
+                groupTable.route.points[1].type = "TakeOffParking"
+                groupTable.uncontrolled = true
+            end
+
             if options.callsign then
                 groupCallsign = options.callsign
             else
@@ -449,6 +457,12 @@ do
                 if aircraftDB.properties then
                     unitTable.AddPropAircraft = DCSEx.table.deepCopy(aircraftDB.properties)
                 end
+
+                -- For parked aircraft
+                if options.airbaseID and options.parkingID then
+                    unitTable.parking = tostring(options.parkingID)
+                end
+
                 -- Setup datalink
                 local datalinkString = tostring(dataLinkID)
                 if #datalinkString == 3 then
