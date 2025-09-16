@@ -101,7 +101,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
 - Better use of context for "ambient" radio messages (should only warn of a SAM launch if an AI pilot is there to witness it, etc)
 - Improved score multiplier taking into account various aspects of mission difficulty (weather, nighttime ops...)
 - Laser designation of targets by JTAC
-- New objectives: helicopter (drop/pickup units...), CAP, CAS, OCA (airbase attack)
+- New objectives: helicopter (drop/pickup units...), CAP, CAS
 - Support for all missing DCS World theaters
 - Support for more factions and five different time periods (World War 2, Korea war, Vietnam war, late Cold war, Modern)
 
