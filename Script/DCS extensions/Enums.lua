@@ -39,15 +39,15 @@ DCSEx.enums.taskEvent = {
 -------------------------------------
 DCSEx.enums.taskFamily = {
     ANTISHIP = 1,
-    -- CAP = 2, -- TODO
-    -- CAS = 3, -- TODO
-    GROUND_ATTACK = 2, -- 4
-    -- HELICOPTER = XXX, -- 5
-    -- HELO_HUNT = XXX, -- 6
-    INTERCEPTION = 3, -- 7
-    -- OCA = XXX, -- 8
-    SEAD = 4, --9
-    STRIKE = 5, -- 10
+    -- CAP = XXX,
+    -- CAS = XXX,
+    GROUND_ATTACK = 2,
+    -- HELICOPTER = XXX,
+    -- HELO_HUNT = XXX,
+    INTERCEPTION = 3,
+    OCA = 4,
+    SEAD = 5,
+    STRIKE = 6,
 }
 
 -------------------------------------
