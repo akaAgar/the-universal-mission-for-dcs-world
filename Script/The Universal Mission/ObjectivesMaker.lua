@@ -96,7 +96,6 @@ do
             for _,p in pairs(parkings) do
                 local parkingUniqueID = pickedAirbase:getID() * 10000 + p.Term_Index
                 if p.Term_Type == 104 and not DCSEx.table.contains(usedParkingSpots, parkingUniqueID) then
-                    table.insert(usedParkingSpots, parkingUniqueID) -- Make sure parking spot won't be used by another objective
                     table.insert(validParkings, p)
                 end
             end
@@ -105,6 +104,7 @@ do
                 return nil
             end
             local pickedParking = DCSEx.table.getRandom(validParkings)
+            table.insert(usedParkingSpots, pickedAirbase:getID() * 10000 + pickedParking.Term_Index) -- Mark parking spot as used so it won't be taken by another objective
             parkingInfo = { airbaseID = pickedAirbase:getID(), parkingID = pickedParking.Term_Index }
             spawnPoint3 = pickedParking.vTerminalPos
             spawnPoint2 = DCSEx.math.vec3ToVec2(spawnPoint3)
