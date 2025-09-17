@@ -1,0 +1,22 @@
+Library.tasks.helicopterDestroyInfantry = {
+   taskFamily = DCSEx.enums.taskFamily.HELICOPTER,
+   description =
+   {
+      briefing = {
+         "",
+      },
+      short = "Neutralize enemy infantry",
+   },
+   conditions = {
+      difficultyMinimum = 0,
+      eras = {},
+   },
+   completionEvent = DCSEx.enums.taskEvent.DESTROY,
+   flags = { },
+   minimumDistance = DCSEx.converter.nmToMeters(5.0),
+   safeRadius = 100,
+   surfaceType = nil,
+   targetCount = { 2, 3 },
+   targetFamilies = { DCSEx.enums.unitFamily.GROUND_INFANTRY },
+   waypointInaccuracy = DCSEx.converter.nmToMeters(1.5)
+}
