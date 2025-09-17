@@ -11,7 +11,7 @@ Library.tasks.ocaBomberStrike = {
       difficultyMinimum = 0,
       eras = {},
    },
-   completionEvent = DCSEx.enums.taskEvent.DESTROY,
+   completionEvent = DCSEx.enums.taskEvent.DAMAGE,
    flags = { DCSEx.enums.taskFlag.ALLOW_JTAC, DCSEx.enums.taskFlag.PARKED_AIRCRAFT_TARGET },
    minimumDistance = 0.0,
    safeRadius = 0,
