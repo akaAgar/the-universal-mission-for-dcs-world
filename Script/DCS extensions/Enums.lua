@@ -29,9 +29,10 @@ DCSEx.enums.lineType = {
 -- Event to check to see if a task/objective is complete
 -------------------------------------
 DCSEx.enums.taskEvent = {
-    DESTROY = 1,
-    DESTROY_SCENERY = 2,
-    LAND = 3,
+    DAMAGE = 1,
+    DESTROY = 2,
+    DESTROY_SCENERY = 3,
+    LAND = 4,
 }
 
 -------------------------------------
