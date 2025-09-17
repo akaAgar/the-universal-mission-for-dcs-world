@@ -1,11 +1,11 @@
-Library.tasks.ocaBomberStrike = {
+Library.tasks.ocaStrategicAircraftStrike = {
    taskFamily = DCSEx.enums.taskFamily.OCA,
    description =
    {
       briefing = {
          ""
       },
-      short = "Destroy enemy bomber on the ramp",
+      short = "Destroy enemy aircraft on the ramp",
    },
    conditions = {
       difficultyMinimum = 0,
@@ -17,6 +17,6 @@ Library.tasks.ocaBomberStrike = {
    safeRadius = 0,
    surfaceType = land.SurfaceType.LAND,
    targetCount = { 1, 1 },
-   targetFamilies = { DCSEx.enums.unitFamily.PLANE_BOMBER },
+   targetFamilies = { DCSEx.enums.unitFamily.PLANE_BOMBER, DCSEx.enums.unitFamily.PLANE_TRANSPORT },
    waypointInaccuracy = 0.0
 }
