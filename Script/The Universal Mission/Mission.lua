@@ -62,6 +62,7 @@ do
         closeMission(true)
         TUM.intermission.removeMissionZonesMarkers()
 
+        TUM.objectivesMaker.clear()
         for _=1,TUM.settings.getValue(TUM.settings.id.TARGET_COUNT) do
             TUM.objectives.add()
         end

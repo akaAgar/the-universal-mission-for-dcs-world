@@ -6,6 +6,8 @@
 TUM.objectivesMaker = {}
 
 do
+    local usedParkingSpots = {}
+
     local function pickRandomTask()
         local taskFamily = TUM.settings.getValue(TUM.settings.id.TASKING)
 
@@ -39,6 +41,10 @@ do
         possiblePoints = DCSEx.dcs.getNearestPoints(nearThisPoint, possiblePoints, 1)
 
         return possiblePoints[1]
+    end
+
+    function TUM.objectivesMaker.clear()
+        usedParkingSpots = {}
     end
 
     function TUM.objectivesMaker.create()
@@ -88,7 +94,11 @@ do
             local parkings = pickedAirbase:getParking()
             local validParkings = {}
             for _,p in pairs(parkings) do
-                if p.Term_Type == 104 then table.insert(validParkings, p) end
+                local parkingUniqueID = pickedAirbase:getID() * 10000 + p.Term_Index
+                if p.Term_Type == 104 and not DCSEx.table.contains(usedParkingSpots, parkingUniqueID) then
+                    table.insert(usedParkingSpots, parkingUniqueID) -- Make sure parking spot won't be used by another objective
+                    table.insert(validParkings, p)
+                end
             end
             if #validParkings == 0 then
                 TUM.log("Failed to find a valid airbase parking to spawn a target.", TUM.logger.logLevel.WARNING)
