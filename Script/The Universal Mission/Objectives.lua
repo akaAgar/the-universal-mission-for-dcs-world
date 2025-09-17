@@ -168,11 +168,27 @@ do
     end
 
     local function onObjectiveEvent(index, event)
+        if not event.initiator then return end
+
         if index < 1 or index > #objectives then return end -- Out of bounds
         if objectives[index].completed then return end -- Objective already completed
 
-        if event.id ~= world.event.S_EVENT_DEAD and event.id ~= world.event.S_EVENT_UNIT_LOST then return end
-        if not event.initiator then return end
+        local completionEvent = Library.tasks[objectives[index].taskID].completionEvent
+
+        if completionEvent == DCSEx.enums.taskEvent.DAMAGE then
+            if event.id ~= world.event.S_EVENT_DEAD and event.id ~= world.event.S_EVENT_HIT and event.id ~= world.event.S_EVENT_UNIT_LOST then return end
+        elseif completionEvent == DCSEx.enums.taskEvent.DESTROY then
+            if event.id ~= world.event.S_EVENT_DEAD and event.id ~= world.event.S_EVENT_UNIT_LOST then return end
+        elseif completionEvent == DCSEx.enums.taskEvent.LAND then
+            if event.id ~= world.event.S_EVENT_LAND then return end
+            if Object.getCategory(event.initiator) ~= Object.Category.UNIT then return end
+            -- TODO: check unit is a helicopter?
+            if event.initiator:getCoalition() ~= TUM.settings.getPlayerCoalition() then return end
+            if DCSEx.math.getDistance2D(DCSEx.math.vec3ToVec2(event.initiator:getPoint()), objectives[index].point2) > 200 then return end -- Too far from objective
+            timer.scheduleFunction(markObjectiveAsComplete, index, timer.getTime() + 3)
+            updateObjectiveText(index)
+            return
+        end
 
         if objectives[index].isAirbaseTarget then
             if Object.getCategory(event.initiator) == Object.Category.BASE then
