@@ -73,7 +73,7 @@ do
             return
         end
 
-        TUM.supportAWACS.create() -- Create the AWACS aircraft if it wasn't airborne already
+        -- TUM.supportAWACS.create() -- Create the AWACS aircraft if it wasn't airborne already
         TUM.enemyAirDefense.create() -- Must be called once objectives have been created
         TUM.airForce.create() -- Must be called once objectives have been created
         TUM.missionMenu.create() -- Must be called once objectives have been created

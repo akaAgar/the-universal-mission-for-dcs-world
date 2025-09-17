@@ -167,6 +167,8 @@ function TUM.initialize()
             timer.scheduleFunction(TUM.onClockTick, nil, timer.getTime() + math.random(10, 15))
         end
     end
+
+    TUM.supportAWACS.create()
 end
 
 if TUM.administrativeSettings.getValue(TUM.administrativeSettings.INITIALIZE_AUTOMATICALLY) then
