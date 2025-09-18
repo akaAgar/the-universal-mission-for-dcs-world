@@ -182,9 +182,18 @@ do
         elseif completionEvent == DCSEx.enums.taskEvent.LAND then
             if event.id ~= world.event.S_EVENT_LAND then return end
             if Object.getCategory(event.initiator) ~= Object.Category.UNIT then return end
-            -- TODO: check unit is a helicopter?
+            if event.initiator:getDesc().category ~= Unit.Category.HELICOPTER then return end
             if event.initiator:getCoalition() ~= TUM.settings.getPlayerCoalition() then return end
             if DCSEx.math.getDistance2D(DCSEx.math.vec3ToVec2(event.initiator:getPoint()), objectives[index].point2) > 200 then return end -- Too far from objective
+
+            -- Remove target group if it exists (to simulate it was picked up/captured)
+            if objectives[index].groupID then
+                local targetGroup = DCSEx.world.getGroupByID(objectives[index].groupID)
+                if targetGroup then
+                    targetGroup:destroy()
+                end
+            end
+
             timer.scheduleFunction(markObjectiveAsComplete, index, timer.getTime() + 3)
             updateObjectiveText(index)
             return
