@@ -81,12 +81,14 @@ Please also note that PvP is not supported at the moment and that the mission wi
 - Balance improvements
   - [ ] Tweaked XP requirements for medals/promotions
 - Bug fixes
-  - [ ] AWACS datalinked contacts not showing on SA pages
-  - [X] AWACS can now detect enemy helicopters
+  - [x] AWACS datalinked now showing on SA pages
+  - [x] AWACS can now detect enemy helicopters
 - Extras
   - [ ] GitHub page
 - Improvements
   - [ ] Better weather reports (cloud cover, rain, etc)
+- Misc
+  - [x] AWACS unit now spawned when mission is loaded
 - New features
   - [ ] Administrative settings menu
   - [ ] Friendly air defenses
