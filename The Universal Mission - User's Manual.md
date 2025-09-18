@@ -113,6 +113,7 @@ The exact content of the menu will depend on the current phase of the mission.
   - **Mission type**: What will your mission be?
     - **Antiship strike**: Sink enemy warships and cargo ships.
     - **Ground attack**: Interdiction missions against armor, artillery and convoys.
+    - **Helicopter-specific tasks**: Tasks specifically designed for helicopters (lift/pick up friendly units, suppress infantry...)
     - **Helicopter hunt**: Shoot down enemy transport and attack helicopters.
     - **Interception**: Shoot down strategic airplanes (bombers, transports...) and enemy attack planes on interdiction missions.
     - **Offensive counter-air**: Bomb enemy airbases and destroy parked aircraft. **(Requires a target location with at least one enemy land airbase)**

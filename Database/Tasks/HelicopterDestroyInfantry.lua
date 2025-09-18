@@ -16,7 +16,7 @@ Library.tasks.helicopterDestroyInfantry = {
    minimumDistance = DCSEx.converter.nmToMeters(5.0),
    safeRadius = 100,
    surfaceType = nil,
-   targetCount = { 2, 3 },
+   targetCount = { 6, 8 },
    targetFamilies = { DCSEx.enums.unitFamily.GROUND_INFANTRY },
    waypointInaccuracy = DCSEx.converter.nmToMeters(1.5)
 }
