@@ -62,6 +62,7 @@ DCSEx.enums.taskFlag = {
     ON_ROADS = 5,
     PARKED_AIRCRAFT_TARGET = 6,
     SCENERY_TARGET = 7,
+    FRIENDLY_TARGET = 8
 }
 
 -------------------------------------

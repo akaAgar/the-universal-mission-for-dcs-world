@@ -174,7 +174,19 @@ do
                 groupOptions.parkingID = parkingInfo.parkingID
             end
 
-            local units = Library.factions.getUnits(TUM.settings.getEnemyFaction(), objectiveDB.targetFamilies, math.random(objectiveDB.targetCount[1], objectiveDB.targetCount[2]))
+            -- Target group belongs to the enemy coalition, unless DCSEx.enums.taskFlag.FRIENDLY_TARGET is set
+            local groupCoalition = TUM.settings.getEnemyCoalition()
+            local groupFaction = TUM.settings.getEnemyFaction()
+            if DCSEx.table.contains(objectiveDB.flags, DCSEx.enums.taskFlag.FRIENDLY_TARGET) then
+                groupCoalition = TUM.settings.getPlayerCoalition()
+                groupFaction = TUM.settings.getPlayerFaction()
+
+                -- Friendly target groups are immortal and invisible, so AI won't kill them before the player got a chance to interact with them
+                groupOptions.immortal = true
+                groupOptions.invisible = true
+            end
+
+            local units = Library.factions.getUnits(groupFaction, objectiveDB.targetFamilies, math.random(objectiveDB.targetCount[1], objectiveDB.targetCount[2]))
 
             local groupInfo = nil
             if objectiveDB.targetFamilies[1] == DCSEx.enums.unitFamily.STATIC_STRUCTURE then
@@ -183,7 +195,7 @@ do
                     groupInfo.unitsID = { DCSEx.unitGroupMaker.createStatic(TUM.settings.getEnemyCoalition(), objective.point2, units[1], "") }
                 end
             else
-                groupInfo = DCSEx.unitGroupMaker.create(TUM.settings.getEnemyCoalition(), DCSEx.dcs.getUnitCategoryFromFamily(objectiveDB.targetFamilies[1]), objective.point2, units, groupOptions)
+                groupInfo = DCSEx.unitGroupMaker.create(groupCoalition, DCSEx.dcs.getUnitCategoryFromFamily(objectiveDB.targetFamilies[1]), objective.point2, units, groupOptions)
             end
 
             if not groupInfo then
