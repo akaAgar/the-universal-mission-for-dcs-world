@@ -177,7 +177,7 @@ do
             if not event.initiator:getPlayerName() then return end
             if TUM.mission.getStatus() == TUM.mission.status.NONE then return end -- Mission not in progress, no wingman needed
             TUM.wingmen.create()
-        elseif event.id == world.event.S_EVENT_LAND then -- Remove wingmen on player landing
+        elseif event.id == world.event.S_EVENT_LAND and event.place then -- Remove wingmen on player landing
             if not event.initiator:getPlayerName() then return end
             TUM.wingmen.removeAll()
         elseif event.id == world.event.S_EVENT_PLAYER_ENTER_UNIT then -- Remove wingmen when player takes control of a new unit

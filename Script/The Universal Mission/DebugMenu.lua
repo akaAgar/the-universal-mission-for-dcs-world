@@ -68,7 +68,10 @@ do
         local runwayTouchEvent = { id = world.event.S_EVENT_RUNWAY_TOUCH, initiator = playerUnit }
         TUM.onEvent(runwayTouchEvent)
 
-        local landingEvent = { id = world.event.S_EVENT_LAND, initiator = playerUnit }
+        local friendlyAirbases = coalition.getAirbases(TUM.settings.getPlayerCoalition())
+        if not friendlyAirbases or #friendlyAirbases == 0 then return end
+
+        local landingEvent = { id = world.event.S_EVENT_LAND, place = friendlyAirbases[1], initiator = playerUnit }
         timer.scheduleFunction(TUM.onEvent, landingEvent, timer.getTime() + 1)
     end
 

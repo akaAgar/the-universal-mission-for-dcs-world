@@ -15,7 +15,6 @@ do
     -- @param event A DCS World event, possibly a S_EVENT_LAND event
     -------------------------------------
     local function removeAIAircraftOnLandEvent(event)
-        if event.id ~= world.event.S_EVENT_LAND then return end
         if not event.initiator then return end
         if Object.getCategory(event.initiator) ~= Object.Category.UNIT then return end -- Not an unit
         if event.initiator:getPlayerName() then return end -- Don't remove player aircraft, that would cause horrendous bugs
@@ -73,6 +72,8 @@ do
     -- @param event The DCS World event
     -------------------------------------
     function TUM.mizCleaner.onEvent(event)
-        removeAIAircraftOnLandEvent(event)
+        if event.id == world.event.S_EVENT_LAND and event.place then
+            removeAIAircraftOnLandEvent(event)
+        end
     end
 end

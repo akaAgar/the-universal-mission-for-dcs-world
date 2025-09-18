@@ -225,11 +225,9 @@ do
         if not event.initiator then return end -- No event initiator
         if Object.getCategory(event.initiator) ~= Object.Category.UNIT then return end -- Initiator isn't an unit
         if event.initiator:getCoalition() ~= TUM.settings.getPlayerCoalition() then return end -- Not a friendly
+        if not event.place then return end -- Not landed at an airbase (e.g. helicopter landing on the ground)
 
-        local baseName = "AIRBASE"
-        if event.place then
-            baseName = event.place:getName():upper()
-        end
+        local baseName = event.place:getName():upper()
 
         if TUM.settings.getValue(TUM.settings.id.MULTIPLAYER) or not event.initiator:getPlayerName() then
             doAmbientChatter("atcSafeLanding", {event.initiator:getCallsign(), baseName}, baseName.." ATC", 1)

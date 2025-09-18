@@ -335,7 +335,7 @@ do
             return
         end
 
-        if event.id == world.event.S_EVENT_LAND then
+        if event.id == world.event.S_EVENT_LAND and event.place then
             onLandEvent(event)
             return
         end

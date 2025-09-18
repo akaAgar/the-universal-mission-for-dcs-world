@@ -83,6 +83,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
   - [x] AWACS datalinked now showing on SA pages
   - [x] AWACS can now detect enemy helicopters
   - [x] Added missing net.allow_unsafe_api value in autoexec.cfg that prevented some advanced scripts from working
+  - [x] "On landing" actions (medal/promotions check, AI wingmen removal, etc) no longer triggered when player lands away from an airfield (e.g. in a Harrier on a helicopter)
 - Extras
   - [ ] GitHub page
 - Improvements
