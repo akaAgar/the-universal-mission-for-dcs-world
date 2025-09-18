@@ -73,7 +73,6 @@ I hope you'll like it.
 
 - Download the latest release from this GitHub page.
 - Copy the provided autoexec.cfg file to your **[Saved Games]\DCS\Config directory**
-  - Please note: as of DCS 2.9.18.12899, it seems the autoexec.cfg file [is no longer needed](https://www.digitalcombatsimulator.com/en/news/changelog/release/2.9.18.12899/) but I advise you to copy it anyway, ED might change its mind again.
 - Copy the .miz files for your theater(s) of choice to your **[Saved Games]\DCS\Missions directory**
 - _**(Optional but strongly recommended)**_ Unsanitize the Lua IO module. You don't have to do this, but the persistent career system won't work if you don't. To do it, open the file **[DCS World installation directory]\Scripts\MissionScripting.lua** with a text editor and comment or remove the line "sanitizeModule('io')". Make sure you restart DCS World once you've modified the file.
   - Please note: should you want to backup, delete or transfer it, career progress is saved in **[DCS World installation directory]\TheUniversalMission.sav**
