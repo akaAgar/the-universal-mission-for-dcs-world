@@ -8,7 +8,7 @@ IF %ERRORLEVEL% NEQ 0 goto ERROR-NO-PHP
 @REM CREATE SCENARIOS
 @REM -------------------------------------------
 set buildConfig=p
-echo THE ULTIMATE MISSION BUILDER SCRIPT:
+echo THE UNIVERSAL MISSION BUILDER SCRIPT:
 echo - Build [P]ersianGulf debug theater only (default)
 echo - Build all [D]ebug theaters
 echo - Build all [R]elease theaters
