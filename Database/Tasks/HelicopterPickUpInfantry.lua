@@ -1,0 +1,22 @@
+-- Library.tasks.helicopterPickUpInfantry = {
+--    taskFamily = DCSEx.enums.taskFamily.HELICOPTER,
+--    description =
+--    {
+--       briefing = {
+--          "",
+--       },
+--       short = "Land and pick up friendly infantry",
+--    },
+--    conditions = {
+--       difficultyMinimum = 0,
+--       eras = {},
+--    },
+--    completionEvent = DCSEx.enums.taskEvent.LAND,
+--    flags = { DCSEx.enums.taskFlag.FRIENDLY_TARGET },
+--    minimumDistance = DCSEx.converter.nmToMeters(5.0),
+--    safeRadius = 100,
+--    surfaceType = nil,
+--    targetCount = { 6, 8 },
+--    targetFamilies = { DCSEx.enums.unitFamily.GROUND_INFANTRY },
+--    waypointInaccuracy = DCSEx.converter.nmToMeters(1.5)
+-- }
