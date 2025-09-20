@@ -55,7 +55,12 @@ do
         if not objectDesc or not objectDesc.attributes then return 10 end -- No description, assume a default value of 10 points
 
         local groundMultiplier = 1
-        if not killedObject:inAir() then groundMultiplier = 0.5 end -- Aircraft killed on the ground are worth less points
+        if not killedObject:inAir() then
+            -- Aircraft killed on the ground are worth less points, except AWACS, bombers and transports
+            if not objectDesc.attributes["AWACS"] and not objectDesc.attributes["Transports"] and not objectDesc.attributes["Strategic bombers"] then
+                groundMultiplier = 0.5
+            end
+        end
 
         -- Misc
         if objectDesc.attributes["Missiles"] then return 10 end
