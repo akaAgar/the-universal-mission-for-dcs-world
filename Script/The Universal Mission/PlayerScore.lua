@@ -300,10 +300,17 @@ do
         if not DCSEx.io.canReadAndWrite() then return 1.0 end -- IO disabled, career and scoring disabled
         if TUM.settings.getValue(TUM.settings.id.MULTIPLAYER) then return 1.0 end -- No scoring in multiplayer
 
+        -- Base XP multiplier is 1.0 (100%)
         local scoreMultiplier = 1.0
+
+        -- Add XP multipliers for game settings
         for _,v in pairs(TUM.settings.id) do
             scoreMultiplier = scoreMultiplier + (TUM.playerScore.getScoreMultiplier(v) or 0.0)
         end
+
+        -- Add XP multipliers for weather
+        scoreMultiplier = scoreMultiplier + TUM.weather.getWeatherXPModifier()
+        scoreMultiplier = scoreMultiplier + TUM.weather.getWindXPModifier()
 
         return math.max(0.0, scoreMultiplier)
     end

@@ -78,6 +78,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
     - [x] Helicopter hunt
     - [x] Offensive counter-air
 - Balance improvements
+  - [x] Missions with higher cloud cover and wind speed now award more XP
   - [ ] Tweaked XP requirements for medals/promotions
 - Bug fixes
   - [x] AWACS datalinked now showing on SA pages
@@ -87,7 +88,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
 - Extras
   - [ ] GitHub page
 - Improvements
-  - [ ] Better weather reports (cloud cover, rain, etc)
+  - [x] Better weather reports (cloud cover, rain, etc)
 - Misc
   - [x] AWACS unit now spawned when mission is loaded
 - New features

@@ -194,6 +194,10 @@ do
             end
         end
 
+        -- Weather 
+        summary = summary.."\n\nWEATHER: "..TUM.weather.getWeatherName().." (+"..tostring(math.ceil(TUM.weather.getWeatherXPModifier() * 100)).."% xp)"
+        summary = summary.."\nWIND: "..DCSEx.string.firstToUpper(TUM.weather.getWindName()).." (+"..tostring(math.ceil(TUM.weather.getWindXPModifier() * 100)).."% xp)"
+
         if showScoreMultiplier then
             summary = summary.."\n\nTotal XP modifier: "..tostring(math.ceil(TUM.playerScore.getTotalScoreMultiplier() * 100)).."%"
         end
