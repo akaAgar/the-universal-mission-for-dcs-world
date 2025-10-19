@@ -1,6 +1,6 @@
 # The Universal Mission for DCS World
 
-**Current version: open beta 0.3.250914** (see the "version history" section at the end of this file for a list of the latest changes)
+**Current version: open beta 0.3.251019** (see the "version history" section at the end of this file for a list of the latest changes)
 
 **This is a BETA version, there may be bugs and there WILL be unbalanced stuff.**
 
@@ -74,23 +74,17 @@ Please also note that PvP is not supported at the moment and that the mission wi
 
 - Additional content
   - [ ] More objectives types
+    - [ ] Close air support
     - [ ] Helicopter-specific tasking (land and pick up units, suppress infantry...)
-    - [x] Helicopter hunt
-    - [x] Offensive counter-air
+    - [ ] Improved OCA missions: bomb enemy airbases
 - Balance improvements
-  - [x] Missions with higher cloud cover and wind speed now award more XP
+  - [ ] Night missions should award more XP
   - [ ] Tweaked XP requirements for medals/promotions
 - Bug fixes
-  - [x] AWACS datalinked now showing on SA pages
-  - [x] AWACS can now detect enemy helicopters
-  - [x] Added missing net.allow_unsafe_api value in autoexec.cfg that prevented some advanced scripts from working
-  - [x] "On landing" actions (medal/promotions check, AI wingmen removal, etc) no longer triggered when player lands away from an airfield (e.g. in a Harrier on a helicopter)
 - Extras
   - [ ] GitHub page
 - Improvements
-  - [x] Better weather reports (cloud cover, rain, etc)
 - Misc
-  - [x] AWACS unit now spawned when mission is loaded
 - New features
   - [ ] Administrative settings menu
   - [ ] Friendly air defenses
@@ -102,17 +96,15 @@ Please also note that PvP is not supported at the moment and that the mission wi
 
 - Additional/improved radio messages
   - More "flavor" radio messages ("fence in" when player approaches the AO, etc) so the world will feel more alive
-- Better balancing of the player career awards and promotions
 - Better use of context for "ambient" radio messages (should only warn of a SAM launch if an AI pilot is there to witness it, etc)
-- Improved score multiplier taking into account various aspects of mission difficulty (weather, nighttime ops...)
 - Laser designation of targets by JTAC
-- New objectives: helicopter (drop/pickup units...), CAP, CAS
+- New objectives: CAP
 - Support for all missing DCS World theaters
 - Support for more factions and five different time periods (World War 2, Korea war, Vietnam war, late Cold war, Modern)
 
 ### Medium priority
 
-- Combined Arms support
+- Combined arms support
 - Modded units support (other than player-controlled aircraft, those are already supported: just add them to the mission)
 - Spawning of tankers for long-range missions
 - (maybe) Text (not voiceover) localization, if there's enough popular demand
@@ -162,6 +154,22 @@ The core script is quite simple and small, I probably won't need too much help w
 
 ## Version history
 
+- **0.3.251019** (10/19/2025)
+  - Additional content
+    - New mission types
+      - "Helicopter hunt" missions: locate and intercept enemy attack and transport helicopters
+      - Offensive counter-air: destroy enemy aircraft on the ramp before they take off **(Requires a target location with at least one enemy land airbase, or mission type will automatically be changed to ground attack)**
+  - Balance improvements
+    - Missions with higher cloud cover and wind speed now award more XP
+  - Bug fixes
+    - AWACS datalinked now showing on SA pages
+    - AWACS can now detect enemy helicopters
+    - Added missing net.allow_unsafe_api value in autoexec.cfg that prevented some advanced scripts from working
+    - "On landing" actions (medal/promotions check, AI wingmen removal, etc) no longer triggered when player lands away from an airfield (e.g. in a Harrier on a helicopter)
+  - Improvements
+    - ATC weather reports now include informations about cloud cover and rain
+  - Misc
+    - AWACS unit now spawned when mission is loaded
 - **0.3.250914** (09/14/2025)
   - **MAJOR CHANGE:**
     - Use of "Client" slots instead of "Player" slots even in single-player missions, allowing the player to respawn on death/ejection instead of having to start the whole mission again

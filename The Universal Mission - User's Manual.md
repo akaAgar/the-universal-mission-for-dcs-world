@@ -5,7 +5,7 @@
 User's manual
 </p>
 <p class="heavy">
-The Universal Mission v0.3.250914<br />
+The Universal Mission v0.3.251019<br />
 Created and maintained by Ambroise Garel (<a href='mailto:akaagarmail@gmail.com'>akaagarmail@gmail.com</a>)
 </p>
 <p class="heavy">
@@ -115,7 +115,7 @@ The exact content of the menu will depend on the current phase of the mission.
     - **Helicopter-specific tasks**: Tasks specifically designed for helicopters (lift/pick up friendly units, suppress infantry...)
     - **Helicopter hunt**: Shoot down enemy transport and attack helicopters.
     - **Interception**: Shoot down strategic airplanes (bombers, transports...) and enemy attack planes on interdiction missions.
-    - **Offensive counter-air**: Bomb enemy airbases and destroy parked aircraft. **(Requires a target location with at least one enemy land airbase)**
+    - **Offensive counter-air**: Bomb enemy airbases and destroy parked aircraft. **(Requires a target area with at least one enemy land airbase, or mission type will automatically be changed to ground attack)**
     - **SEAD**: Destroy enemy SAM sites.
     - **Strike**: Destroy enemy structures and civilian buildings occupied by enemy forces.
   - **Target location**: Where on the map will the targets be spawned? Approximate distance to possible regions is displayed in the menu.
