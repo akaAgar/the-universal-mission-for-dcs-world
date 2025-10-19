@@ -43,12 +43,12 @@ DCSEx.enums.taskFamily = {
     -- CAP = XXX,
     -- CAS = XXX,
     GROUND_ATTACK = 2,
-    HELICOPTER = 3,
-    HELO_HUNT = 4,
-    INTERCEPTION = 5,
-    OCA = 6,
-    SEAD = 7,
-    STRIKE = 8,
+    -- HELICOPTER = 3,
+    HELO_HUNT = 3,
+    INTERCEPTION = 4,
+    OCA = 5,
+    SEAD = 6,
+    STRIKE = 7,
 }
 
 -------------------------------------
