@@ -132,14 +132,17 @@ do
             commonWeatherInfo = commonWeatherInfo.." (day, sunset at "..DCSEx.string.getTimeString(Library.environment.getDayTime(nil, true))..")\n"
         end
 
+        commonWeatherInfo = commonWeatherInfo.."- Cloud cover: "..TUM.weather.getWeatherName(nil, true).."\n"
+        commonWeatherInfo = commonWeatherInfo.."- Wind: "..TUM.weather.getWindName()..", with avg. speed of "..tostring(math.floor(Library.environment.getWindAverage())).."m/s\n"
+        commonWeatherInfo = commonWeatherInfo.."- Average ground-level temperature is "..getTemperatureCelsiusAndFarenheit(env.mission.weather.season.temperature).."\n"
+
         local players = coalition.getPlayers(TUM.settings.getPlayerCoalition())
         for _,p in ipairs(players) do
             local lTemperature, _ = atmosphere.getTemperatureAndPressure(p:getPoint())
 
-            local localWeatherInfo = "- Average windspeed is "..tostring(math.floor(Library.environment.getWindAverage())).."m/s\n"
-            localWeatherInfo = localWeatherInfo.."- Windspeed at your location is "..DCSEx.math.getLength3D(atmosphere.getWind(p:getPoint())).."m/s\n"
-            localWeatherInfo = localWeatherInfo.."- Average ground-level temperature is "..getTemperatureCelsiusAndFarenheit(env.mission.weather.season.temperature).."\n"
-            localWeatherInfo = localWeatherInfo.."- Temperature at your location is "..getTemperatureCelsiusAndFarenheit(lTemperature, true)
+            local localWeatherInfo = ""
+            localWeatherInfo = localWeatherInfo.."- Wind speed at your location is "..tostring(math.floor(DCSEx.math.getLength3D(atmosphere.getWind(p:getPoint())))).."m/s\n"
+            localWeatherInfo = localWeatherInfo.."- Temperature at your location is "..getTemperatureCelsiusAndFarenheit(lTemperature, true).."\n"
 
             TUM.radio.playForUnit(DCSEx.dcs.getObjectIDAsNumber(p), "atcWeatherUpdate", { commonWeatherInfo..localWeatherInfo }, "Control", delayRadioAnswer)
         end
