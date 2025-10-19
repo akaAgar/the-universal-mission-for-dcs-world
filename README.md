@@ -76,7 +76,7 @@ Please also note that PvP is not supported at the moment and that the mission wi
   - [ ] More objectives types
     - [ ] Helicopter-specific tasking (land and pick up units, suppress infantry...)
     - [x] Helicopter hunt
-    - [ ] Offensive counter-air
+    - [x] Offensive counter-air
 - Balance improvements
   - [ ] Tweaked XP requirements for medals/promotions
 - Bug fixes
